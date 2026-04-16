@@ -4,18 +4,20 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { authClient } from "@/lib/auth-client"
 
-export function ButtonSignOut() {
+export function NavbarSignOut() {
   const router = useRouter()
 
-  async function signOut() {
+  async function handleSignOut() {
     await authClient.signOut({
       fetchOptions: {
-        onSuccess: () => {
-          router.replace("/")
-        },
+        onSuccess: () => router.replace("/"),
       },
     })
   }
 
-  return <Button onClick={signOut}>Sair da conta</Button>
+  return (
+    <Button variant="outline" size="sm" onClick={handleSignOut}>
+      Sair
+    </Button>
+  )
 }

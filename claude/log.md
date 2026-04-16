@@ -245,3 +245,335 @@ Verifica sessão uma única vez para todas as rotas autenticadas. Se não houver
 ---
 
 *Próxima entrada: Fase 2 — Layout e navegação.*
+
+---
+
+## 2026-04-15 — Fase 2: Layout e navegação (concluída)
+
+### O que foi feito
+
+#### 1. `next-themes` instalado e `ThemeProvider` criado
+
+- `src/components/theme-provider.tsx`: wrapper Client Component sobre `NextThemesProvider` com `attribute="class"` e `defaultTheme="system"`.
+- Adicionado ao `src/app/layout.tsx` envolvendo `{children}` e `<Toaster>`.
+
+**Por que `attribute="class"`:** O `globals.css` já usa `@custom-variant dark (&:is(.dark *))`, que depende da classe `.dark` no elemento raiz. O `next-themes` com `attribute="class"` adiciona/remove essa classe no `<html>` automaticamente, sem nenhuma mudança no CSS existente.
+
+**Por que `defaultTheme="system"`:** Respeita a preferência do sistema operacional do usuário na primeira visita, sem forçar um tema arbitrário.
+
+---
+
+#### 2. `ThemeToggle` criado
+
+- `src/components/theme-toggle.tsx`: Client Component com ícones Sol/Lua que alternam via `useTheme()`. Ícones usam `transition-all` do Tailwind para animação suave.
+- `aria-label="Alternar tema"` para acessibilidade.
+
+---
+
+#### 3. `Navbar` criada com arquitetura Server + Client
+
+Três arquivos em `src/components/navbar/`:
+
+| Arquivo | Tipo | Responsabilidade |
+|---|---|---|
+| `navbar.tsx` | Server Component | Busca sessão, monta estrutura HTML, renderiza nav desktop |
+| `navbar-mobile.tsx` | Client Component | Controla estado `open/closed` do menu hamburguer |
+| `navbar-signout.tsx` | Client Component | Botão de sair (precisa de `useRouter`) |
+
+**Por que separar Server e Client:** O menu mobile precisa de `useState` para abrir/fechar — mas isso não justifica tornar a navbar inteira um Client Component. O Server Component busca a sessão e passa `userName` como prop para os filhos Client. Isso mantém o fetch de sessão no servidor, onde é mais eficiente e seguro.
+
+**Links da navbar:** Início (`/dashboard`), Vagas (`/vagas`), Alertas (`/alertas`), Perfil (`/perfil`) — rotas que serão criadas nas Fases 3, 4 e 5.
+
+---
+
+#### 4. Layout autenticado atualizado
+
+`src/app/(authenticated)/layout.tsx` agora renderiza:
+```tsx
+<div className="flex min-h-screen flex-col">
+  <Navbar />
+  <main className="flex-1">{children}</main>
+</div>
+```
+
+Estrutura `flex-col` com `flex-1` no `<main>` garante que o footer futuro (se houver) empurra para o fundo e que páginas curtas não deixam espaço vazio.
+
+---
+
+#### 5. Dashboard refatorado
+
+`src/app/(authenticated)/dashboard/page.tsx` virou a página inicial real: dois cards de atalho (Vagas e Alertas) com botões de navegação. Dados reais entrarão nas Fases 3 e 4.
+
+`button-signout.tsx` foi removido do dashboard — o botão de sair migrou para a Navbar.
+
+---
+
+### Arquivos criados
+
+| Arquivo | Ação |
+|---|---|
+| `src/components/theme-provider.tsx` | Criado |
+| `src/components/theme-toggle.tsx` | Criado |
+| `src/components/navbar/navbar.tsx` | Criado |
+| `src/components/navbar/navbar-mobile.tsx` | Criado |
+| `src/components/navbar/navbar-signout.tsx` | Criado |
+
+### Arquivos alterados
+
+| Arquivo | Mudança |
+|---|---|
+| `src/app/layout.tsx` | `ThemeProvider` adicionado |
+| `src/app/(authenticated)/layout.tsx` | Navbar e estrutura flex adicionadas |
+| `src/app/(authenticated)/dashboard/page.tsx` | Refatorado com cards de atalho |
+
+### Arquivos removidos
+
+`src/app/(authenticated)/dashboard/_components/button-signout.tsx`
+
+---
+
+### Critérios de aceite do RF-02 atendidos
+
+- [x] `(authenticated)/layout.tsx` protege rotas filhas (guard desativado temporariamente para desenvolvimento)
+- [x] Navbar exibe nome do usuário, links para vagas, alertas, perfil e botão de sair
+- [x] Navbar é responsiva (menu hamburguer no mobile)
+- [x] Verificação de sessão acontece uma única vez no layout/navbar
+- [x] Toggle dark/light mode
+
+---
+
+*Próxima entrada: Fase 3 — Vagas.*
+
+---
+
+## 2026-04-15 — Fase 3: Vagas (concluída)
+
+### O que foi feito
+
+#### 1. Camada de serviço com mock intercambiável
+
+Padrão de três camadas:
+
+| Arquivo | Papel |
+|---|---|
+| `src/lib/schemas/vaga.ts` | Tipos Zod — única fonte de verdade do modelo |
+| `src/lib/mock/vagas.ts` | 12 vagas realistas (dados estáticos) |
+| `src/lib/services/vagas.ts` | `getVagas(filtros?)` e `getVagaById(id)` com TODO comentado |
+
+**Por que essa separação:** páginas e componentes importam apenas de `services/vagas.ts`. Quando a API estiver pronta, troca-se o corpo das funções do serviço sem tocar em nenhuma outra camada. A assinatura `async` no mock garante que a troca por `fetch()` não quebre nada.
+
+---
+
+#### 2. Filtros via URL `searchParams`
+
+`VagaFiltros` é um Client Component que atualiza a URL (`router.push`) ao invés de manter estado local. A página Server Component lê os `searchParams` e chama `getVagas(filtros)`.
+
+**Por que URL e não `useState`:** os filtros ficam no URL, tornando os resultados compartilháveis e funcionando com o botão voltar do navegador. O servidor renderiza diretamente o resultado filtrado — sem round-trip de dados no cliente.
+
+Filtros disponíveis: busca por texto (`q`), localização, modalidade e salário mínimo.
+
+---
+
+#### 3. Paginação server-side
+
+9 vagas por página, controlado via `?page=N` na URL. O componente `VagaPaginacao` (Client) apenas atualiza o parâmetro de página no URL — o servidor faz o slice dos dados.
+
+---
+
+#### 4. Skeleton de loading
+
+`vagas/loading.tsx` exibe 9 esqueletos de cards (grid 3×3) — mesma estrutura visual da listagem real — enquanto o servidor busca os dados.
+
+---
+
+#### 5. Detalhe da vaga
+
+`vagas/[id]/page.tsx` é Server Component que chama `getVagaById(id)`. Se `null`, chama `notFound()` que renderiza `vagas/[id]/not-found.tsx`. Metadata dinâmica via `generateMetadata`.
+
+---
+
+### Arquivos criados
+
+| Arquivo | Descrição |
+|---|---|
+| `src/lib/schemas/vaga.ts` | Schema Zod + tipos |
+| `src/lib/mock/vagas.ts` | 12 vagas mockadas |
+| `src/lib/services/vagas.ts` | Serviço com TODO para a API |
+| `src/components/empty-state/empty-state.tsx` | Estado vazio reutilizável |
+| `src/app/(authenticated)/vagas/page.tsx` | Listagem |
+| `src/app/(authenticated)/vagas/loading.tsx` | Skeleton |
+| `src/app/(authenticated)/vagas/_components/vaga-card.tsx` | Card de vaga |
+| `src/app/(authenticated)/vagas/_components/vaga-filtros.tsx` | Filtros interativos |
+| `src/app/(authenticated)/vagas/_components/vaga-paginacao.tsx` | Paginação |
+| `src/app/(authenticated)/vagas/[id]/page.tsx` | Detalhe |
+| `src/app/(authenticated)/vagas/[id]/not-found.tsx` | 404 de vaga |
+
+---
+
+### Critérios de aceite do RF-03 atendidos
+
+- [x] Lista vagas em cards
+- [x] Cards mostram título, empresa, localização, modalidade, data
+- [x] Cards clicáveis levam ao detalhe
+- [x] Filtros: texto, localização, modalidade, salário mínimo
+- [x] Paginação por página
+- [x] Estado vazio com mensagem amigável
+- [x] Estado de loading com skeleton
+- [x] Estado de erro: tratado pelo `error.tsx` global
+
+### Critérios de aceite do RF-04 atendidos
+
+- [x] Exibe todos os dados da vaga
+- [x] Botão "Voltar" para listagem
+- [x] Link externo (quando disponível)
+- [x] 404 amigável se vaga não existir
+- [x] Server Component por padrão
+
+---
+
+*Próxima entrada: Fase 4 — Alertas.*
+
+---
+
+## 2026-04-15 — Fase 4: Alertas (concluída)
+
+### O que foi feito
+
+#### 1. Schema Zod com enum de frequência
+
+Decisão tomada: frequência com opções fixas — `imediato`, `diario`, `semanal`. Fácil de expandir no futuro sem breaking changes.
+
+`alertaFormSchema` separado de `alertaSchema` — o schema do formulário aceita `salarioMin/Max` como string vazia (campo opcional no input) e faz coerce para número.
+
+---
+
+#### 2. Server Actions com mock mutável
+
+`alertas/actions.ts` exporta 4 actions: `criarAlerta`, `editarAlerta`, `excluirAlerta`, `toggleAlerta`. Todas retornam `{ ok: boolean, error?: string }` conforme Seção 10 da spec.
+
+O mock usa um array mutável em memória — as ações alteram o array diretamente. Reseta ao reiniciar o servidor, o que é aceitável durante o desenvolvimento.
+
+**Por que Server Actions e não Route Handlers:** Server Actions chamadas de Client Components não precisam de `fetch()` — o Next.js serializa e transporta automaticamente. Menos boilerplate, tipagem de ponta a ponta.
+
+---
+
+#### 3. `ConfirmDialog` reutilizável
+
+`src/components/ui/confirm-dialog.tsx` — Dialog de confirmação com props para título, descrição, rótulos dos botões e variante (`default` ou `destructive`). Usado na exclusão de alertas.
+
+---
+
+#### 4. `AlertaForm` compartilhado
+
+Um único formulário para criar e editar. Diferenciação via prop `alerta?`:
+- `alerta` ausente → modo criação (campos vazios, chama `criarAlerta`)
+- `alerta` presente → modo edição (campos pré-preenchidos, chama `editarAlerta`)
+
+**Por que um único componente:** evita duplicação de lógica de validação e layout. O formulário é idêntico nas duas rotas.
+
+---
+
+#### 5. `AlertaCard` com optimistic update no toggle
+
+O Switch de ativar/desativar usa `useTransition` + estado local otimista: a UI atualiza imediatamente e reverte se a Server Action falhar. Isso evita a sensação de lag na interação.
+
+---
+
+### Arquivos criados
+
+| Arquivo | Descrição |
+|---|---|
+| `src/lib/schemas/alerta.ts` | Schema Zod + tipos |
+| `src/lib/mock/alertas.ts` | 3 alertas mockados (array mutável) |
+| `src/lib/services/alertas.ts` | `getAlertas` / `getAlertaById` |
+| `src/app/(authenticated)/alertas/actions.ts` | 4 Server Actions com TODO para API |
+| `src/components/ui/confirm-dialog.tsx` | Dialog de confirmação reutilizável |
+| `src/app/(authenticated)/alertas/page.tsx` | Listagem |
+| `src/app/(authenticated)/alertas/loading.tsx` | Skeleton |
+| `src/app/(authenticated)/alertas/_components/alerta-card.tsx` | Card com ações |
+| `src/app/(authenticated)/alertas/_components/alerta-form.tsx` | Formulário criar/editar |
+| `src/app/(authenticated)/alertas/novo/page.tsx` | Página de criação |
+| `src/app/(authenticated)/alertas/[id]/editar/page.tsx` | Página de edição |
+
+---
+
+### Critérios de aceite atendidos
+
+**RF-05 (Criação):**
+- [x] Formulário com todos os campos especificados
+- [x] Validação Zod (client + server)
+- [x] Botão desabilitado durante submit
+- [x] Toast de sucesso/erro
+- [x] Redirect para listagem após salvar
+
+**RF-06 (Listagem):**
+- [x] Cards com nome, critérios, frequência, status
+- [x] Ações por item: editar, excluir, ativar/desativar
+- [x] Confirmação antes de excluir
+- [x] Estado vazio com CTA "Criar primeiro alerta"
+- [x] Botão "Novo alerta" no topo
+
+**RF-07 (Edição):**
+- [x] Mesmo formulário pré-preenchido
+- [x] Validação idêntica
+- [x] Toast e redirect após salvar
+- [x] `notFound()` se alerta não existir
+
+---
+
+*Próxima entrada: Fase 5 — Perfil.*
+
+---
+
+## 2026-04-15 — Refatoração: domínio de vagas corrigido
+
+### Motivação
+
+O domínio do projeto foi esclarecido: o AlertaDeVagas não é uma plataforma de empregos. As "vagas" são **vagas de inscrição em encontros/palestras** do programa Labs Talents. O schema real do banco é:
+
+```sql
+encontros   (id, nome, data, vagas_max)
+mentorados  (id, nome, email)
+inscricoes  (encontro_id, mentorado_id)
+```
+
+Toda a camada de mock e componentes foi refatorada para refletir esse domínio.
+
+---
+
+### O que mudou
+
+#### Modelo `Vaga` (antes: emprego → agora: encontro)
+
+| Campo removido | Campo adicionado |
+|---|---|
+| `empresa` | `vagasMax` |
+| `salarioMin/Max` | `vagasDisponiveis` |
+| `requisitos` | `data` (data do evento) |
+| `beneficios` | — |
+| `modalidade` remoto/presencial/híbrido | `modalidade` online/presencial |
+| `localizacao` (cidade) | `localizacao` (endereço — só para presenciais) |
+
+#### Modelo `Alerta` (simplificado)
+
+Removidos: `localizacao`, `salarioMin`, `salarioMax`. A modalidade passou de 4 opções para 3: `online`, `presencial`, `todas`.
+
+#### Comportamento dos cards de vaga
+
+- Badge de disponibilidade: **"Esgotado"** / **"Últimas N vagas"** / **"N vagas"**
+- Botão desabilitado quando `vagasDisponiveis === 0`
+- Ordenação por data do encontro (mais próximo primeiro)
+
+#### Filtros de vagas
+
+Removidos: localização, faixa salarial. Adicionado: toggle **"Apenas com vagas disponíveis"**.
+
+---
+
+### Arquivos refatorados
+
+`src/lib/schemas/vaga.ts`, `src/lib/mock/vagas.ts`, `src/lib/services/vagas.ts`, `src/lib/schemas/alerta.ts`, `src/lib/mock/alertas.ts`, `src/app/(authenticated)/alertas/actions.ts`, `src/app/(authenticated)/vagas/_components/vaga-card.tsx`, `src/app/(authenticated)/vagas/_components/vaga-filtros.tsx`, `src/app/(authenticated)/vagas/page.tsx`, `src/app/(authenticated)/vagas/[id]/page.tsx`, `src/app/(authenticated)/alertas/_components/alerta-form.tsx`, `src/app/(authenticated)/alertas/_components/alerta-card.tsx`
+
+---
+
+*Próxima entrada: Fase 5 — Perfil (após refatoração).*
