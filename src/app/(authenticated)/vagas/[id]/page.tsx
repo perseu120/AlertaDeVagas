@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, Calendar, ExternalLink, MapPin, Monitor, Users } from "lucide-react"
-import { getVagaById } from "@/lib/services/vagas"
+import { vagaService } from "@/services/vagas"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -29,14 +29,14 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params
-  const vaga = await getVagaById(id)
+  const vaga = await vagaService.getVagaById(id)
   if (!vaga) return { title: "Encontro não encontrado" }
   return { title: vaga.nome }
 }
 
 export default async function VagaDetalhe({ params }: PageProps) {
   const { id } = await params
-  const vaga = await getVagaById(id)
+  const vaga = await vagaService.getVagaById(id)
 
   if (!vaga) notFound()
 

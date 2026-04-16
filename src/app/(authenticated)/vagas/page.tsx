@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { vagaFiltrosSchema } from "@/lib/schemas/vaga"
-import { getVagas } from "@/lib/services/vagas"
+import { vagaService } from "@/services/vagas"
 import { VagaCard } from "./_components/vaga-card"
 import { VagaFiltros } from "./_components/vaga-filtros"
 import { VagaPaginacao } from "./_components/vaga-paginacao"
@@ -21,7 +21,7 @@ export default async function VagasPage({ searchParams }: PageProps) {
     page: params.page,
   })
 
-  const { vagas, total, paginas } = await getVagas(filtros)
+  const { vagas, total, paginas } = await vagaService.getVagas(filtros)
 
   return (
     <div className="container mx-auto px-4 py-10">

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import { getAlertaById } from "@/lib/services/alertas"
+import { alertaService } from "@/services/alertas"
 import { Button } from "@/components/ui/button"
 import { AlertaForm } from "../../_components/alerta-form"
 
@@ -13,7 +13,7 @@ interface PageProps {
 
 export default async function EditarAlertaPage({ params }: PageProps) {
   const { id } = await params
-  const alerta = await getAlertaById(id)
+  const alerta = await alertaService.getAlertaById(id)
 
   if (!alerta) notFound()
 

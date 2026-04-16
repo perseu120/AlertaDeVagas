@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Plus } from "lucide-react"
-import { getAlertas } from "@/lib/services/alertas"
+import { alertaService } from "@/services/alertas"
 import { Button } from "@/components/ui/button"
 import { EmptyState } from "@/components/empty-state/empty-state"
 import { AlertaCard } from "./_components/alerta-card"
@@ -8,7 +8,7 @@ import { AlertaCard } from "./_components/alerta-card"
 export const metadata = { title: "Alertas" }
 
 export default async function AlertasPage() {
-  const alertas = await getAlertas()
+  const alertas = await alertaService.getAlertas()
 
   return (
     <div className="container mx-auto px-4 py-10">
