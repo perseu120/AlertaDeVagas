@@ -577,3 +577,88 @@ Removidos: localização, faixa salarial. Adicionado: toggle **"Apenas com vagas
 ---
 
 *Próxima entrada: Fase 5 — Perfil (após refatoração).*
+
+---
+
+## 2026-04-15 — Fase 5: Perfil (concluída)
+
+### O que foi feito
+
+#### 1. Server Actions com mock (`perfil/actions.ts`)
+
+Duas ações: `atualizarNome` e `excluirConta`. Ambas retornam `{ ok, error? }` conforme padrão da Seção 10. Validação do nome via Zod inline (mín. 2, máx. 100 caracteres). Mock com `setTimeout` simulando latência.
+
+**TODO comentado:** substituir por `auth.api.updateUser` e `auth.api.deleteUser` quando a integração estiver pronta.
+
+---
+
+#### 2. `PerfilForm` — edição de nome
+
+Client Component com React Hook Form + Zod. Chama `atualizarNome` Server Action no submit. `router.refresh()` após sucesso para atualizar os dados da sessão no Server Component pai.
+
+**Por que `router.refresh()` e não `revalidatePath`:** os dados do perfil vêm da sessão do Better Auth (não de um cache de rota), então o refresh força o Server Component a re-buscar a sessão atualizada.
+
+---
+
+#### 3. `PerfilDeleteAccount` — exclusão com confirmação dupla
+
+Fluxo em duas etapas:
+1. `ConfirmDialog` reutilizável (já existia) com aviso de irreversibilidade
+2. Dialog customizado que exige digitar "EXCLUIR" antes de habilitar o botão
+
+Após exclusão bem-sucedida, redireciona para `/` via `router.push`.
+
+**Por que dois dialogs sequenciais:** a spec pede "confirmação dupla". A primeira etapa é rápida (um clique), a segunda exige ação deliberada (digitar texto), reduzindo exclusões acidentais a praticamente zero.
+
+---
+
+#### 4. `PerfilPage` — Server Component
+
+Busca sessão via `auth.api.getSession()`. Exibe três cards:
+- **Informações da conta:** email (somente leitura) e data de criação
+- **Dados pessoais:** formulário de edição de nome
+- **Zona de perigo:** botão de excluir conta com borda `destructive`
+
+Data de criação formatada com `toLocaleDateString("pt-BR")`.
+
+---
+
+#### 5. `PerfilLoading` — skeleton
+
+Skeleton que espelha a estrutura dos 3 cards da página real.
+
+---
+
+### Arquivos criados
+
+| Arquivo | Descrição |
+|---|---|
+| `src/app/(authenticated)/perfil/page.tsx` | Página de perfil (Server Component) |
+| `src/app/(authenticated)/perfil/loading.tsx` | Skeleton de loading |
+| `src/app/(authenticated)/perfil/actions.ts` | Server Actions mock |
+| `src/app/(authenticated)/perfil/_components/perfil-form.tsx` | Formulário de edição de nome |
+| `src/app/(authenticated)/perfil/_components/perfil-delete-account.tsx` | Exclusão com confirmação dupla |
+
+---
+
+### Critérios de aceite do RF-08 atendidos
+
+- [x] Exibe nome, email, data de criação da conta
+- [x] Permite editar nome
+- [x] Email não é editável
+- [x] Botão "Excluir conta" com confirmação dupla
+- [x] Toast de sucesso após salvar alterações
+
+### Critérios de pronto (Seção 12)
+
+- [x] Todos os critérios de aceitação do RF-08 atendidos
+- [x] Funciona em mobile (max-w-2xl responsivo) e desktop
+- [x] Estados loading (skeleton) e erro (toast) tratados
+- [x] Validação no client (Zod + RHF) e no server (Zod na action)
+- [x] Acessível por teclado (Label associado, Dialog com foco gerenciado)
+- [x] Sem `console.log` ou `alert` no código
+- [x] Sem warnings no console
+
+---
+
+*Fase 5 concluída. Todas as 6 fases (0–5) da spec foram implementadas.*
