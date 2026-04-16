@@ -76,3 +76,23 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
+model encontros {
+  id        Int       @id @default(autoincrement())
+  nome      String
+  data      DateTime?
+  vagas_max Int
+}
+
+model mentorados {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  email String
+}
+
+model inscricoes {
+  id           Int    @id @default(autoincrement())
+  encontro_id  String
+  mentorado_id String
+  UNIQUE       String
+}

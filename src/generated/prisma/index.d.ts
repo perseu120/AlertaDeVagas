@@ -33,6 +33,21 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
  * 
  */
 export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
+/**
+ * Model encontros
+ * 
+ */
+export type encontros = $Result.DefaultSelection<Prisma.$encontrosPayload>
+/**
+ * Model mentorados
+ * 
+ */
+export type mentorados = $Result.DefaultSelection<Prisma.$mentoradosPayload>
+/**
+ * Model inscricoes
+ * 
+ */
+export type inscricoes = $Result.DefaultSelection<Prisma.$inscricoesPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -198,6 +213,36 @@ export class PrismaClient<
     * ```
     */
   get verification(): Prisma.VerificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.encontros`: Exposes CRUD operations for the **encontros** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Encontros
+    * const encontros = await prisma.encontros.findMany()
+    * ```
+    */
+  get encontros(): Prisma.encontrosDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mentorados`: Exposes CRUD operations for the **mentorados** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Mentorados
+    * const mentorados = await prisma.mentorados.findMany()
+    * ```
+    */
+  get mentorados(): Prisma.mentoradosDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inscricoes`: Exposes CRUD operations for the **inscricoes** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Inscricoes
+    * const inscricoes = await prisma.inscricoes.findMany()
+    * ```
+    */
+  get inscricoes(): Prisma.inscricoesDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -641,7 +686,10 @@ export namespace Prisma {
     User: 'User',
     Session: 'Session',
     Account: 'Account',
-    Verification: 'Verification'
+    Verification: 'Verification',
+    encontros: 'encontros',
+    mentorados: 'mentorados',
+    inscricoes: 'inscricoes'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -660,7 +708,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification"
+      modelProps: "user" | "session" | "account" | "verification" | "encontros" | "mentorados" | "inscricoes"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -960,6 +1008,228 @@ export namespace Prisma {
           }
         }
       }
+      encontros: {
+        payload: Prisma.$encontrosPayload<ExtArgs>
+        fields: Prisma.encontrosFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.encontrosFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.encontrosFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>
+          }
+          findFirst: {
+            args: Prisma.encontrosFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.encontrosFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>
+          }
+          findMany: {
+            args: Prisma.encontrosFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>[]
+          }
+          create: {
+            args: Prisma.encontrosCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>
+          }
+          createMany: {
+            args: Prisma.encontrosCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.encontrosCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>[]
+          }
+          delete: {
+            args: Prisma.encontrosDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>
+          }
+          update: {
+            args: Prisma.encontrosUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>
+          }
+          deleteMany: {
+            args: Prisma.encontrosDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.encontrosUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.encontrosUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>[]
+          }
+          upsert: {
+            args: Prisma.encontrosUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$encontrosPayload>
+          }
+          aggregate: {
+            args: Prisma.EncontrosAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEncontros>
+          }
+          groupBy: {
+            args: Prisma.encontrosGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EncontrosGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.encontrosCountArgs<ExtArgs>
+            result: $Utils.Optional<EncontrosCountAggregateOutputType> | number
+          }
+        }
+      }
+      mentorados: {
+        payload: Prisma.$mentoradosPayload<ExtArgs>
+        fields: Prisma.mentoradosFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.mentoradosFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.mentoradosFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>
+          }
+          findFirst: {
+            args: Prisma.mentoradosFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.mentoradosFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>
+          }
+          findMany: {
+            args: Prisma.mentoradosFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>[]
+          }
+          create: {
+            args: Prisma.mentoradosCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>
+          }
+          createMany: {
+            args: Prisma.mentoradosCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.mentoradosCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>[]
+          }
+          delete: {
+            args: Prisma.mentoradosDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>
+          }
+          update: {
+            args: Prisma.mentoradosUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>
+          }
+          deleteMany: {
+            args: Prisma.mentoradosDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.mentoradosUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.mentoradosUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>[]
+          }
+          upsert: {
+            args: Prisma.mentoradosUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$mentoradosPayload>
+          }
+          aggregate: {
+            args: Prisma.MentoradosAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMentorados>
+          }
+          groupBy: {
+            args: Prisma.mentoradosGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MentoradosGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.mentoradosCountArgs<ExtArgs>
+            result: $Utils.Optional<MentoradosCountAggregateOutputType> | number
+          }
+        }
+      }
+      inscricoes: {
+        payload: Prisma.$inscricoesPayload<ExtArgs>
+        fields: Prisma.inscricoesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.inscricoesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.inscricoesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>
+          }
+          findFirst: {
+            args: Prisma.inscricoesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.inscricoesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>
+          }
+          findMany: {
+            args: Prisma.inscricoesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>[]
+          }
+          create: {
+            args: Prisma.inscricoesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>
+          }
+          createMany: {
+            args: Prisma.inscricoesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.inscricoesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>[]
+          }
+          delete: {
+            args: Prisma.inscricoesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>
+          }
+          update: {
+            args: Prisma.inscricoesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>
+          }
+          deleteMany: {
+            args: Prisma.inscricoesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.inscricoesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.inscricoesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>[]
+          }
+          upsert: {
+            args: Prisma.inscricoesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$inscricoesPayload>
+          }
+          aggregate: {
+            args: Prisma.InscricoesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInscricoes>
+          }
+          groupBy: {
+            args: Prisma.inscricoesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InscricoesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.inscricoesCountArgs<ExtArgs>
+            result: $Utils.Optional<InscricoesCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1048,6 +1318,9 @@ export namespace Prisma {
     session?: SessionOmit
     account?: AccountOmit
     verification?: VerificationOmit
+    encontros?: encontrosOmit
+    mentorados?: mentoradosOmit
+    inscricoes?: inscricoesOmit
   }
 
   /* Types for Logging */
@@ -5573,6 +5846,3045 @@ export namespace Prisma {
 
 
   /**
+   * Model encontros
+   */
+
+  export type AggregateEncontros = {
+    _count: EncontrosCountAggregateOutputType | null
+    _avg: EncontrosAvgAggregateOutputType | null
+    _sum: EncontrosSumAggregateOutputType | null
+    _min: EncontrosMinAggregateOutputType | null
+    _max: EncontrosMaxAggregateOutputType | null
+  }
+
+  export type EncontrosAvgAggregateOutputType = {
+    id: number | null
+    vagas_max: number | null
+  }
+
+  export type EncontrosSumAggregateOutputType = {
+    id: number | null
+    vagas_max: number | null
+  }
+
+  export type EncontrosMinAggregateOutputType = {
+    id: number | null
+    nome: string | null
+    data: Date | null
+    vagas_max: number | null
+  }
+
+  export type EncontrosMaxAggregateOutputType = {
+    id: number | null
+    nome: string | null
+    data: Date | null
+    vagas_max: number | null
+  }
+
+  export type EncontrosCountAggregateOutputType = {
+    id: number
+    nome: number
+    data: number
+    vagas_max: number
+    _all: number
+  }
+
+
+  export type EncontrosAvgAggregateInputType = {
+    id?: true
+    vagas_max?: true
+  }
+
+  export type EncontrosSumAggregateInputType = {
+    id?: true
+    vagas_max?: true
+  }
+
+  export type EncontrosMinAggregateInputType = {
+    id?: true
+    nome?: true
+    data?: true
+    vagas_max?: true
+  }
+
+  export type EncontrosMaxAggregateInputType = {
+    id?: true
+    nome?: true
+    data?: true
+    vagas_max?: true
+  }
+
+  export type EncontrosCountAggregateInputType = {
+    id?: true
+    nome?: true
+    data?: true
+    vagas_max?: true
+    _all?: true
+  }
+
+  export type EncontrosAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which encontros to aggregate.
+     */
+    where?: encontrosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of encontros to fetch.
+     */
+    orderBy?: encontrosOrderByWithRelationInput | encontrosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: encontrosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` encontros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` encontros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned encontros
+    **/
+    _count?: true | EncontrosCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EncontrosAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EncontrosSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EncontrosMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EncontrosMaxAggregateInputType
+  }
+
+  export type GetEncontrosAggregateType<T extends EncontrosAggregateArgs> = {
+        [P in keyof T & keyof AggregateEncontros]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEncontros[P]>
+      : GetScalarType<T[P], AggregateEncontros[P]>
+  }
+
+
+
+
+  export type encontrosGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: encontrosWhereInput
+    orderBy?: encontrosOrderByWithAggregationInput | encontrosOrderByWithAggregationInput[]
+    by: EncontrosScalarFieldEnum[] | EncontrosScalarFieldEnum
+    having?: encontrosScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EncontrosCountAggregateInputType | true
+    _avg?: EncontrosAvgAggregateInputType
+    _sum?: EncontrosSumAggregateInputType
+    _min?: EncontrosMinAggregateInputType
+    _max?: EncontrosMaxAggregateInputType
+  }
+
+  export type EncontrosGroupByOutputType = {
+    id: number
+    nome: string
+    data: Date | null
+    vagas_max: number
+    _count: EncontrosCountAggregateOutputType | null
+    _avg: EncontrosAvgAggregateOutputType | null
+    _sum: EncontrosSumAggregateOutputType | null
+    _min: EncontrosMinAggregateOutputType | null
+    _max: EncontrosMaxAggregateOutputType | null
+  }
+
+  type GetEncontrosGroupByPayload<T extends encontrosGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EncontrosGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EncontrosGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EncontrosGroupByOutputType[P]>
+            : GetScalarType<T[P], EncontrosGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type encontrosSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nome?: boolean
+    data?: boolean
+    vagas_max?: boolean
+  }, ExtArgs["result"]["encontros"]>
+
+  export type encontrosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nome?: boolean
+    data?: boolean
+    vagas_max?: boolean
+  }, ExtArgs["result"]["encontros"]>
+
+  export type encontrosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nome?: boolean
+    data?: boolean
+    vagas_max?: boolean
+  }, ExtArgs["result"]["encontros"]>
+
+  export type encontrosSelectScalar = {
+    id?: boolean
+    nome?: boolean
+    data?: boolean
+    vagas_max?: boolean
+  }
+
+  export type encontrosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "data" | "vagas_max", ExtArgs["result"]["encontros"]>
+
+  export type $encontrosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "encontros"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nome: string
+      data: Date | null
+      vagas_max: number
+    }, ExtArgs["result"]["encontros"]>
+    composites: {}
+  }
+
+  type encontrosGetPayload<S extends boolean | null | undefined | encontrosDefaultArgs> = $Result.GetResult<Prisma.$encontrosPayload, S>
+
+  type encontrosCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<encontrosFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EncontrosCountAggregateInputType | true
+    }
+
+  export interface encontrosDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['encontros'], meta: { name: 'encontros' } }
+    /**
+     * Find zero or one Encontros that matches the filter.
+     * @param {encontrosFindUniqueArgs} args - Arguments to find a Encontros
+     * @example
+     * // Get one Encontros
+     * const encontros = await prisma.encontros.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends encontrosFindUniqueArgs>(args: SelectSubset<T, encontrosFindUniqueArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Encontros that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {encontrosFindUniqueOrThrowArgs} args - Arguments to find a Encontros
+     * @example
+     * // Get one Encontros
+     * const encontros = await prisma.encontros.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends encontrosFindUniqueOrThrowArgs>(args: SelectSubset<T, encontrosFindUniqueOrThrowArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Encontros that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {encontrosFindFirstArgs} args - Arguments to find a Encontros
+     * @example
+     * // Get one Encontros
+     * const encontros = await prisma.encontros.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends encontrosFindFirstArgs>(args?: SelectSubset<T, encontrosFindFirstArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Encontros that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {encontrosFindFirstOrThrowArgs} args - Arguments to find a Encontros
+     * @example
+     * // Get one Encontros
+     * const encontros = await prisma.encontros.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends encontrosFindFirstOrThrowArgs>(args?: SelectSubset<T, encontrosFindFirstOrThrowArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Encontros that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {encontrosFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Encontros
+     * const encontros = await prisma.encontros.findMany()
+     * 
+     * // Get first 10 Encontros
+     * const encontros = await prisma.encontros.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const encontrosWithIdOnly = await prisma.encontros.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends encontrosFindManyArgs>(args?: SelectSubset<T, encontrosFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Encontros.
+     * @param {encontrosCreateArgs} args - Arguments to create a Encontros.
+     * @example
+     * // Create one Encontros
+     * const Encontros = await prisma.encontros.create({
+     *   data: {
+     *     // ... data to create a Encontros
+     *   }
+     * })
+     * 
+     */
+    create<T extends encontrosCreateArgs>(args: SelectSubset<T, encontrosCreateArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Encontros.
+     * @param {encontrosCreateManyArgs} args - Arguments to create many Encontros.
+     * @example
+     * // Create many Encontros
+     * const encontros = await prisma.encontros.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends encontrosCreateManyArgs>(args?: SelectSubset<T, encontrosCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Encontros and returns the data saved in the database.
+     * @param {encontrosCreateManyAndReturnArgs} args - Arguments to create many Encontros.
+     * @example
+     * // Create many Encontros
+     * const encontros = await prisma.encontros.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Encontros and only return the `id`
+     * const encontrosWithIdOnly = await prisma.encontros.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends encontrosCreateManyAndReturnArgs>(args?: SelectSubset<T, encontrosCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Encontros.
+     * @param {encontrosDeleteArgs} args - Arguments to delete one Encontros.
+     * @example
+     * // Delete one Encontros
+     * const Encontros = await prisma.encontros.delete({
+     *   where: {
+     *     // ... filter to delete one Encontros
+     *   }
+     * })
+     * 
+     */
+    delete<T extends encontrosDeleteArgs>(args: SelectSubset<T, encontrosDeleteArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Encontros.
+     * @param {encontrosUpdateArgs} args - Arguments to update one Encontros.
+     * @example
+     * // Update one Encontros
+     * const encontros = await prisma.encontros.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends encontrosUpdateArgs>(args: SelectSubset<T, encontrosUpdateArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Encontros.
+     * @param {encontrosDeleteManyArgs} args - Arguments to filter Encontros to delete.
+     * @example
+     * // Delete a few Encontros
+     * const { count } = await prisma.encontros.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends encontrosDeleteManyArgs>(args?: SelectSubset<T, encontrosDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Encontros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {encontrosUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Encontros
+     * const encontros = await prisma.encontros.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends encontrosUpdateManyArgs>(args: SelectSubset<T, encontrosUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Encontros and returns the data updated in the database.
+     * @param {encontrosUpdateManyAndReturnArgs} args - Arguments to update many Encontros.
+     * @example
+     * // Update many Encontros
+     * const encontros = await prisma.encontros.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Encontros and only return the `id`
+     * const encontrosWithIdOnly = await prisma.encontros.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends encontrosUpdateManyAndReturnArgs>(args: SelectSubset<T, encontrosUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Encontros.
+     * @param {encontrosUpsertArgs} args - Arguments to update or create a Encontros.
+     * @example
+     * // Update or create a Encontros
+     * const encontros = await prisma.encontros.upsert({
+     *   create: {
+     *     // ... data to create a Encontros
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Encontros we want to update
+     *   }
+     * })
+     */
+    upsert<T extends encontrosUpsertArgs>(args: SelectSubset<T, encontrosUpsertArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Encontros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {encontrosCountArgs} args - Arguments to filter Encontros to count.
+     * @example
+     * // Count the number of Encontros
+     * const count = await prisma.encontros.count({
+     *   where: {
+     *     // ... the filter for the Encontros we want to count
+     *   }
+     * })
+    **/
+    count<T extends encontrosCountArgs>(
+      args?: Subset<T, encontrosCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EncontrosCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Encontros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EncontrosAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EncontrosAggregateArgs>(args: Subset<T, EncontrosAggregateArgs>): Prisma.PrismaPromise<GetEncontrosAggregateType<T>>
+
+    /**
+     * Group by Encontros.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {encontrosGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends encontrosGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: encontrosGroupByArgs['orderBy'] }
+        : { orderBy?: encontrosGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, encontrosGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEncontrosGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the encontros model
+   */
+  readonly fields: encontrosFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for encontros.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__encontrosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the encontros model
+   */
+  interface encontrosFieldRefs {
+    readonly id: FieldRef<"encontros", 'Int'>
+    readonly nome: FieldRef<"encontros", 'String'>
+    readonly data: FieldRef<"encontros", 'DateTime'>
+    readonly vagas_max: FieldRef<"encontros", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * encontros findUnique
+   */
+  export type encontrosFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Filter, which encontros to fetch.
+     */
+    where: encontrosWhereUniqueInput
+  }
+
+  /**
+   * encontros findUniqueOrThrow
+   */
+  export type encontrosFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Filter, which encontros to fetch.
+     */
+    where: encontrosWhereUniqueInput
+  }
+
+  /**
+   * encontros findFirst
+   */
+  export type encontrosFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Filter, which encontros to fetch.
+     */
+    where?: encontrosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of encontros to fetch.
+     */
+    orderBy?: encontrosOrderByWithRelationInput | encontrosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for encontros.
+     */
+    cursor?: encontrosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` encontros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` encontros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of encontros.
+     */
+    distinct?: EncontrosScalarFieldEnum | EncontrosScalarFieldEnum[]
+  }
+
+  /**
+   * encontros findFirstOrThrow
+   */
+  export type encontrosFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Filter, which encontros to fetch.
+     */
+    where?: encontrosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of encontros to fetch.
+     */
+    orderBy?: encontrosOrderByWithRelationInput | encontrosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for encontros.
+     */
+    cursor?: encontrosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` encontros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` encontros.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of encontros.
+     */
+    distinct?: EncontrosScalarFieldEnum | EncontrosScalarFieldEnum[]
+  }
+
+  /**
+   * encontros findMany
+   */
+  export type encontrosFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Filter, which encontros to fetch.
+     */
+    where?: encontrosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of encontros to fetch.
+     */
+    orderBy?: encontrosOrderByWithRelationInput | encontrosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing encontros.
+     */
+    cursor?: encontrosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` encontros from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` encontros.
+     */
+    skip?: number
+    distinct?: EncontrosScalarFieldEnum | EncontrosScalarFieldEnum[]
+  }
+
+  /**
+   * encontros create
+   */
+  export type encontrosCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * The data needed to create a encontros.
+     */
+    data: XOR<encontrosCreateInput, encontrosUncheckedCreateInput>
+  }
+
+  /**
+   * encontros createMany
+   */
+  export type encontrosCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many encontros.
+     */
+    data: encontrosCreateManyInput | encontrosCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * encontros createManyAndReturn
+   */
+  export type encontrosCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * The data used to create many encontros.
+     */
+    data: encontrosCreateManyInput | encontrosCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * encontros update
+   */
+  export type encontrosUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * The data needed to update a encontros.
+     */
+    data: XOR<encontrosUpdateInput, encontrosUncheckedUpdateInput>
+    /**
+     * Choose, which encontros to update.
+     */
+    where: encontrosWhereUniqueInput
+  }
+
+  /**
+   * encontros updateMany
+   */
+  export type encontrosUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update encontros.
+     */
+    data: XOR<encontrosUpdateManyMutationInput, encontrosUncheckedUpdateManyInput>
+    /**
+     * Filter which encontros to update
+     */
+    where?: encontrosWhereInput
+    /**
+     * Limit how many encontros to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * encontros updateManyAndReturn
+   */
+  export type encontrosUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * The data used to update encontros.
+     */
+    data: XOR<encontrosUpdateManyMutationInput, encontrosUncheckedUpdateManyInput>
+    /**
+     * Filter which encontros to update
+     */
+    where?: encontrosWhereInput
+    /**
+     * Limit how many encontros to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * encontros upsert
+   */
+  export type encontrosUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * The filter to search for the encontros to update in case it exists.
+     */
+    where: encontrosWhereUniqueInput
+    /**
+     * In case the encontros found by the `where` argument doesn't exist, create a new encontros with this data.
+     */
+    create: XOR<encontrosCreateInput, encontrosUncheckedCreateInput>
+    /**
+     * In case the encontros was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<encontrosUpdateInput, encontrosUncheckedUpdateInput>
+  }
+
+  /**
+   * encontros delete
+   */
+  export type encontrosDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Filter which encontros to delete.
+     */
+    where: encontrosWhereUniqueInput
+  }
+
+  /**
+   * encontros deleteMany
+   */
+  export type encontrosDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which encontros to delete
+     */
+    where?: encontrosWhereInput
+    /**
+     * Limit how many encontros to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * encontros without action
+   */
+  export type encontrosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the encontros
+     */
+    select?: encontrosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the encontros
+     */
+    omit?: encontrosOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model mentorados
+   */
+
+  export type AggregateMentorados = {
+    _count: MentoradosCountAggregateOutputType | null
+    _avg: MentoradosAvgAggregateOutputType | null
+    _sum: MentoradosSumAggregateOutputType | null
+    _min: MentoradosMinAggregateOutputType | null
+    _max: MentoradosMaxAggregateOutputType | null
+  }
+
+  export type MentoradosAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MentoradosSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MentoradosMinAggregateOutputType = {
+    id: number | null
+    nome: string | null
+    email: string | null
+  }
+
+  export type MentoradosMaxAggregateOutputType = {
+    id: number | null
+    nome: string | null
+    email: string | null
+  }
+
+  export type MentoradosCountAggregateOutputType = {
+    id: number
+    nome: number
+    email: number
+    _all: number
+  }
+
+
+  export type MentoradosAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type MentoradosSumAggregateInputType = {
+    id?: true
+  }
+
+  export type MentoradosMinAggregateInputType = {
+    id?: true
+    nome?: true
+    email?: true
+  }
+
+  export type MentoradosMaxAggregateInputType = {
+    id?: true
+    nome?: true
+    email?: true
+  }
+
+  export type MentoradosCountAggregateInputType = {
+    id?: true
+    nome?: true
+    email?: true
+    _all?: true
+  }
+
+  export type MentoradosAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which mentorados to aggregate.
+     */
+    where?: mentoradosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of mentorados to fetch.
+     */
+    orderBy?: mentoradosOrderByWithRelationInput | mentoradosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: mentoradosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` mentorados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` mentorados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned mentorados
+    **/
+    _count?: true | MentoradosCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MentoradosAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MentoradosSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MentoradosMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MentoradosMaxAggregateInputType
+  }
+
+  export type GetMentoradosAggregateType<T extends MentoradosAggregateArgs> = {
+        [P in keyof T & keyof AggregateMentorados]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMentorados[P]>
+      : GetScalarType<T[P], AggregateMentorados[P]>
+  }
+
+
+
+
+  export type mentoradosGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: mentoradosWhereInput
+    orderBy?: mentoradosOrderByWithAggregationInput | mentoradosOrderByWithAggregationInput[]
+    by: MentoradosScalarFieldEnum[] | MentoradosScalarFieldEnum
+    having?: mentoradosScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MentoradosCountAggregateInputType | true
+    _avg?: MentoradosAvgAggregateInputType
+    _sum?: MentoradosSumAggregateInputType
+    _min?: MentoradosMinAggregateInputType
+    _max?: MentoradosMaxAggregateInputType
+  }
+
+  export type MentoradosGroupByOutputType = {
+    id: number
+    nome: string
+    email: string
+    _count: MentoradosCountAggregateOutputType | null
+    _avg: MentoradosAvgAggregateOutputType | null
+    _sum: MentoradosSumAggregateOutputType | null
+    _min: MentoradosMinAggregateOutputType | null
+    _max: MentoradosMaxAggregateOutputType | null
+  }
+
+  type GetMentoradosGroupByPayload<T extends mentoradosGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MentoradosGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MentoradosGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MentoradosGroupByOutputType[P]>
+            : GetScalarType<T[P], MentoradosGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type mentoradosSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nome?: boolean
+    email?: boolean
+  }, ExtArgs["result"]["mentorados"]>
+
+  export type mentoradosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nome?: boolean
+    email?: boolean
+  }, ExtArgs["result"]["mentorados"]>
+
+  export type mentoradosSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nome?: boolean
+    email?: boolean
+  }, ExtArgs["result"]["mentorados"]>
+
+  export type mentoradosSelectScalar = {
+    id?: boolean
+    nome?: boolean
+    email?: boolean
+  }
+
+  export type mentoradosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "email", ExtArgs["result"]["mentorados"]>
+
+  export type $mentoradosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "mentorados"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nome: string
+      email: string
+    }, ExtArgs["result"]["mentorados"]>
+    composites: {}
+  }
+
+  type mentoradosGetPayload<S extends boolean | null | undefined | mentoradosDefaultArgs> = $Result.GetResult<Prisma.$mentoradosPayload, S>
+
+  type mentoradosCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<mentoradosFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MentoradosCountAggregateInputType | true
+    }
+
+  export interface mentoradosDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['mentorados'], meta: { name: 'mentorados' } }
+    /**
+     * Find zero or one Mentorados that matches the filter.
+     * @param {mentoradosFindUniqueArgs} args - Arguments to find a Mentorados
+     * @example
+     * // Get one Mentorados
+     * const mentorados = await prisma.mentorados.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends mentoradosFindUniqueArgs>(args: SelectSubset<T, mentoradosFindUniqueArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Mentorados that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {mentoradosFindUniqueOrThrowArgs} args - Arguments to find a Mentorados
+     * @example
+     * // Get one Mentorados
+     * const mentorados = await prisma.mentorados.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends mentoradosFindUniqueOrThrowArgs>(args: SelectSubset<T, mentoradosFindUniqueOrThrowArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Mentorados that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {mentoradosFindFirstArgs} args - Arguments to find a Mentorados
+     * @example
+     * // Get one Mentorados
+     * const mentorados = await prisma.mentorados.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends mentoradosFindFirstArgs>(args?: SelectSubset<T, mentoradosFindFirstArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Mentorados that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {mentoradosFindFirstOrThrowArgs} args - Arguments to find a Mentorados
+     * @example
+     * // Get one Mentorados
+     * const mentorados = await prisma.mentorados.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends mentoradosFindFirstOrThrowArgs>(args?: SelectSubset<T, mentoradosFindFirstOrThrowArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Mentorados that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {mentoradosFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Mentorados
+     * const mentorados = await prisma.mentorados.findMany()
+     * 
+     * // Get first 10 Mentorados
+     * const mentorados = await prisma.mentorados.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mentoradosWithIdOnly = await prisma.mentorados.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends mentoradosFindManyArgs>(args?: SelectSubset<T, mentoradosFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Mentorados.
+     * @param {mentoradosCreateArgs} args - Arguments to create a Mentorados.
+     * @example
+     * // Create one Mentorados
+     * const Mentorados = await prisma.mentorados.create({
+     *   data: {
+     *     // ... data to create a Mentorados
+     *   }
+     * })
+     * 
+     */
+    create<T extends mentoradosCreateArgs>(args: SelectSubset<T, mentoradosCreateArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Mentorados.
+     * @param {mentoradosCreateManyArgs} args - Arguments to create many Mentorados.
+     * @example
+     * // Create many Mentorados
+     * const mentorados = await prisma.mentorados.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends mentoradosCreateManyArgs>(args?: SelectSubset<T, mentoradosCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Mentorados and returns the data saved in the database.
+     * @param {mentoradosCreateManyAndReturnArgs} args - Arguments to create many Mentorados.
+     * @example
+     * // Create many Mentorados
+     * const mentorados = await prisma.mentorados.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Mentorados and only return the `id`
+     * const mentoradosWithIdOnly = await prisma.mentorados.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends mentoradosCreateManyAndReturnArgs>(args?: SelectSubset<T, mentoradosCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Mentorados.
+     * @param {mentoradosDeleteArgs} args - Arguments to delete one Mentorados.
+     * @example
+     * // Delete one Mentorados
+     * const Mentorados = await prisma.mentorados.delete({
+     *   where: {
+     *     // ... filter to delete one Mentorados
+     *   }
+     * })
+     * 
+     */
+    delete<T extends mentoradosDeleteArgs>(args: SelectSubset<T, mentoradosDeleteArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Mentorados.
+     * @param {mentoradosUpdateArgs} args - Arguments to update one Mentorados.
+     * @example
+     * // Update one Mentorados
+     * const mentorados = await prisma.mentorados.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends mentoradosUpdateArgs>(args: SelectSubset<T, mentoradosUpdateArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Mentorados.
+     * @param {mentoradosDeleteManyArgs} args - Arguments to filter Mentorados to delete.
+     * @example
+     * // Delete a few Mentorados
+     * const { count } = await prisma.mentorados.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends mentoradosDeleteManyArgs>(args?: SelectSubset<T, mentoradosDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Mentorados.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {mentoradosUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Mentorados
+     * const mentorados = await prisma.mentorados.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends mentoradosUpdateManyArgs>(args: SelectSubset<T, mentoradosUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Mentorados and returns the data updated in the database.
+     * @param {mentoradosUpdateManyAndReturnArgs} args - Arguments to update many Mentorados.
+     * @example
+     * // Update many Mentorados
+     * const mentorados = await prisma.mentorados.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Mentorados and only return the `id`
+     * const mentoradosWithIdOnly = await prisma.mentorados.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends mentoradosUpdateManyAndReturnArgs>(args: SelectSubset<T, mentoradosUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Mentorados.
+     * @param {mentoradosUpsertArgs} args - Arguments to update or create a Mentorados.
+     * @example
+     * // Update or create a Mentorados
+     * const mentorados = await prisma.mentorados.upsert({
+     *   create: {
+     *     // ... data to create a Mentorados
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Mentorados we want to update
+     *   }
+     * })
+     */
+    upsert<T extends mentoradosUpsertArgs>(args: SelectSubset<T, mentoradosUpsertArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Mentorados.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {mentoradosCountArgs} args - Arguments to filter Mentorados to count.
+     * @example
+     * // Count the number of Mentorados
+     * const count = await prisma.mentorados.count({
+     *   where: {
+     *     // ... the filter for the Mentorados we want to count
+     *   }
+     * })
+    **/
+    count<T extends mentoradosCountArgs>(
+      args?: Subset<T, mentoradosCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MentoradosCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Mentorados.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MentoradosAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MentoradosAggregateArgs>(args: Subset<T, MentoradosAggregateArgs>): Prisma.PrismaPromise<GetMentoradosAggregateType<T>>
+
+    /**
+     * Group by Mentorados.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {mentoradosGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends mentoradosGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: mentoradosGroupByArgs['orderBy'] }
+        : { orderBy?: mentoradosGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, mentoradosGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMentoradosGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the mentorados model
+   */
+  readonly fields: mentoradosFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for mentorados.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__mentoradosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the mentorados model
+   */
+  interface mentoradosFieldRefs {
+    readonly id: FieldRef<"mentorados", 'Int'>
+    readonly nome: FieldRef<"mentorados", 'String'>
+    readonly email: FieldRef<"mentorados", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * mentorados findUnique
+   */
+  export type mentoradosFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Filter, which mentorados to fetch.
+     */
+    where: mentoradosWhereUniqueInput
+  }
+
+  /**
+   * mentorados findUniqueOrThrow
+   */
+  export type mentoradosFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Filter, which mentorados to fetch.
+     */
+    where: mentoradosWhereUniqueInput
+  }
+
+  /**
+   * mentorados findFirst
+   */
+  export type mentoradosFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Filter, which mentorados to fetch.
+     */
+    where?: mentoradosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of mentorados to fetch.
+     */
+    orderBy?: mentoradosOrderByWithRelationInput | mentoradosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for mentorados.
+     */
+    cursor?: mentoradosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` mentorados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` mentorados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of mentorados.
+     */
+    distinct?: MentoradosScalarFieldEnum | MentoradosScalarFieldEnum[]
+  }
+
+  /**
+   * mentorados findFirstOrThrow
+   */
+  export type mentoradosFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Filter, which mentorados to fetch.
+     */
+    where?: mentoradosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of mentorados to fetch.
+     */
+    orderBy?: mentoradosOrderByWithRelationInput | mentoradosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for mentorados.
+     */
+    cursor?: mentoradosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` mentorados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` mentorados.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of mentorados.
+     */
+    distinct?: MentoradosScalarFieldEnum | MentoradosScalarFieldEnum[]
+  }
+
+  /**
+   * mentorados findMany
+   */
+  export type mentoradosFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Filter, which mentorados to fetch.
+     */
+    where?: mentoradosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of mentorados to fetch.
+     */
+    orderBy?: mentoradosOrderByWithRelationInput | mentoradosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing mentorados.
+     */
+    cursor?: mentoradosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` mentorados from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` mentorados.
+     */
+    skip?: number
+    distinct?: MentoradosScalarFieldEnum | MentoradosScalarFieldEnum[]
+  }
+
+  /**
+   * mentorados create
+   */
+  export type mentoradosCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * The data needed to create a mentorados.
+     */
+    data: XOR<mentoradosCreateInput, mentoradosUncheckedCreateInput>
+  }
+
+  /**
+   * mentorados createMany
+   */
+  export type mentoradosCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many mentorados.
+     */
+    data: mentoradosCreateManyInput | mentoradosCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * mentorados createManyAndReturn
+   */
+  export type mentoradosCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * The data used to create many mentorados.
+     */
+    data: mentoradosCreateManyInput | mentoradosCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * mentorados update
+   */
+  export type mentoradosUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * The data needed to update a mentorados.
+     */
+    data: XOR<mentoradosUpdateInput, mentoradosUncheckedUpdateInput>
+    /**
+     * Choose, which mentorados to update.
+     */
+    where: mentoradosWhereUniqueInput
+  }
+
+  /**
+   * mentorados updateMany
+   */
+  export type mentoradosUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update mentorados.
+     */
+    data: XOR<mentoradosUpdateManyMutationInput, mentoradosUncheckedUpdateManyInput>
+    /**
+     * Filter which mentorados to update
+     */
+    where?: mentoradosWhereInput
+    /**
+     * Limit how many mentorados to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * mentorados updateManyAndReturn
+   */
+  export type mentoradosUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * The data used to update mentorados.
+     */
+    data: XOR<mentoradosUpdateManyMutationInput, mentoradosUncheckedUpdateManyInput>
+    /**
+     * Filter which mentorados to update
+     */
+    where?: mentoradosWhereInput
+    /**
+     * Limit how many mentorados to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * mentorados upsert
+   */
+  export type mentoradosUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * The filter to search for the mentorados to update in case it exists.
+     */
+    where: mentoradosWhereUniqueInput
+    /**
+     * In case the mentorados found by the `where` argument doesn't exist, create a new mentorados with this data.
+     */
+    create: XOR<mentoradosCreateInput, mentoradosUncheckedCreateInput>
+    /**
+     * In case the mentorados was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<mentoradosUpdateInput, mentoradosUncheckedUpdateInput>
+  }
+
+  /**
+   * mentorados delete
+   */
+  export type mentoradosDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Filter which mentorados to delete.
+     */
+    where: mentoradosWhereUniqueInput
+  }
+
+  /**
+   * mentorados deleteMany
+   */
+  export type mentoradosDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which mentorados to delete
+     */
+    where?: mentoradosWhereInput
+    /**
+     * Limit how many mentorados to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * mentorados without action
+   */
+  export type mentoradosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the mentorados
+     */
+    select?: mentoradosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the mentorados
+     */
+    omit?: mentoradosOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model inscricoes
+   */
+
+  export type AggregateInscricoes = {
+    _count: InscricoesCountAggregateOutputType | null
+    _avg: InscricoesAvgAggregateOutputType | null
+    _sum: InscricoesSumAggregateOutputType | null
+    _min: InscricoesMinAggregateOutputType | null
+    _max: InscricoesMaxAggregateOutputType | null
+  }
+
+  export type InscricoesAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type InscricoesSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type InscricoesMinAggregateOutputType = {
+    id: number | null
+    encontro_id: string | null
+    mentorado_id: string | null
+    UNIQUE: string | null
+  }
+
+  export type InscricoesMaxAggregateOutputType = {
+    id: number | null
+    encontro_id: string | null
+    mentorado_id: string | null
+    UNIQUE: string | null
+  }
+
+  export type InscricoesCountAggregateOutputType = {
+    id: number
+    encontro_id: number
+    mentorado_id: number
+    UNIQUE: number
+    _all: number
+  }
+
+
+  export type InscricoesAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type InscricoesSumAggregateInputType = {
+    id?: true
+  }
+
+  export type InscricoesMinAggregateInputType = {
+    id?: true
+    encontro_id?: true
+    mentorado_id?: true
+    UNIQUE?: true
+  }
+
+  export type InscricoesMaxAggregateInputType = {
+    id?: true
+    encontro_id?: true
+    mentorado_id?: true
+    UNIQUE?: true
+  }
+
+  export type InscricoesCountAggregateInputType = {
+    id?: true
+    encontro_id?: true
+    mentorado_id?: true
+    UNIQUE?: true
+    _all?: true
+  }
+
+  export type InscricoesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which inscricoes to aggregate.
+     */
+    where?: inscricoesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of inscricoes to fetch.
+     */
+    orderBy?: inscricoesOrderByWithRelationInput | inscricoesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: inscricoesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` inscricoes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` inscricoes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned inscricoes
+    **/
+    _count?: true | InscricoesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InscricoesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InscricoesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InscricoesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InscricoesMaxAggregateInputType
+  }
+
+  export type GetInscricoesAggregateType<T extends InscricoesAggregateArgs> = {
+        [P in keyof T & keyof AggregateInscricoes]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInscricoes[P]>
+      : GetScalarType<T[P], AggregateInscricoes[P]>
+  }
+
+
+
+
+  export type inscricoesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: inscricoesWhereInput
+    orderBy?: inscricoesOrderByWithAggregationInput | inscricoesOrderByWithAggregationInput[]
+    by: InscricoesScalarFieldEnum[] | InscricoesScalarFieldEnum
+    having?: inscricoesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InscricoesCountAggregateInputType | true
+    _avg?: InscricoesAvgAggregateInputType
+    _sum?: InscricoesSumAggregateInputType
+    _min?: InscricoesMinAggregateInputType
+    _max?: InscricoesMaxAggregateInputType
+  }
+
+  export type InscricoesGroupByOutputType = {
+    id: number
+    encontro_id: string
+    mentorado_id: string
+    UNIQUE: string
+    _count: InscricoesCountAggregateOutputType | null
+    _avg: InscricoesAvgAggregateOutputType | null
+    _sum: InscricoesSumAggregateOutputType | null
+    _min: InscricoesMinAggregateOutputType | null
+    _max: InscricoesMaxAggregateOutputType | null
+  }
+
+  type GetInscricoesGroupByPayload<T extends inscricoesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InscricoesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InscricoesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InscricoesGroupByOutputType[P]>
+            : GetScalarType<T[P], InscricoesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type inscricoesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    encontro_id?: boolean
+    mentorado_id?: boolean
+    UNIQUE?: boolean
+  }, ExtArgs["result"]["inscricoes"]>
+
+  export type inscricoesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    encontro_id?: boolean
+    mentorado_id?: boolean
+    UNIQUE?: boolean
+  }, ExtArgs["result"]["inscricoes"]>
+
+  export type inscricoesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    encontro_id?: boolean
+    mentorado_id?: boolean
+    UNIQUE?: boolean
+  }, ExtArgs["result"]["inscricoes"]>
+
+  export type inscricoesSelectScalar = {
+    id?: boolean
+    encontro_id?: boolean
+    mentorado_id?: boolean
+    UNIQUE?: boolean
+  }
+
+  export type inscricoesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "encontro_id" | "mentorado_id" | "UNIQUE", ExtArgs["result"]["inscricoes"]>
+
+  export type $inscricoesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "inscricoes"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      encontro_id: string
+      mentorado_id: string
+      UNIQUE: string
+    }, ExtArgs["result"]["inscricoes"]>
+    composites: {}
+  }
+
+  type inscricoesGetPayload<S extends boolean | null | undefined | inscricoesDefaultArgs> = $Result.GetResult<Prisma.$inscricoesPayload, S>
+
+  type inscricoesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<inscricoesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InscricoesCountAggregateInputType | true
+    }
+
+  export interface inscricoesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['inscricoes'], meta: { name: 'inscricoes' } }
+    /**
+     * Find zero or one Inscricoes that matches the filter.
+     * @param {inscricoesFindUniqueArgs} args - Arguments to find a Inscricoes
+     * @example
+     * // Get one Inscricoes
+     * const inscricoes = await prisma.inscricoes.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends inscricoesFindUniqueArgs>(args: SelectSubset<T, inscricoesFindUniqueArgs<ExtArgs>>): Prisma__inscricoesClient<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Inscricoes that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {inscricoesFindUniqueOrThrowArgs} args - Arguments to find a Inscricoes
+     * @example
+     * // Get one Inscricoes
+     * const inscricoes = await prisma.inscricoes.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends inscricoesFindUniqueOrThrowArgs>(args: SelectSubset<T, inscricoesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__inscricoesClient<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Inscricoes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {inscricoesFindFirstArgs} args - Arguments to find a Inscricoes
+     * @example
+     * // Get one Inscricoes
+     * const inscricoes = await prisma.inscricoes.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends inscricoesFindFirstArgs>(args?: SelectSubset<T, inscricoesFindFirstArgs<ExtArgs>>): Prisma__inscricoesClient<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Inscricoes that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {inscricoesFindFirstOrThrowArgs} args - Arguments to find a Inscricoes
+     * @example
+     * // Get one Inscricoes
+     * const inscricoes = await prisma.inscricoes.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends inscricoesFindFirstOrThrowArgs>(args?: SelectSubset<T, inscricoesFindFirstOrThrowArgs<ExtArgs>>): Prisma__inscricoesClient<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Inscricoes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {inscricoesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Inscricoes
+     * const inscricoes = await prisma.inscricoes.findMany()
+     * 
+     * // Get first 10 Inscricoes
+     * const inscricoes = await prisma.inscricoes.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inscricoesWithIdOnly = await prisma.inscricoes.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends inscricoesFindManyArgs>(args?: SelectSubset<T, inscricoesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Inscricoes.
+     * @param {inscricoesCreateArgs} args - Arguments to create a Inscricoes.
+     * @example
+     * // Create one Inscricoes
+     * const Inscricoes = await prisma.inscricoes.create({
+     *   data: {
+     *     // ... data to create a Inscricoes
+     *   }
+     * })
+     * 
+     */
+    create<T extends inscricoesCreateArgs>(args: SelectSubset<T, inscricoesCreateArgs<ExtArgs>>): Prisma__inscricoesClient<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Inscricoes.
+     * @param {inscricoesCreateManyArgs} args - Arguments to create many Inscricoes.
+     * @example
+     * // Create many Inscricoes
+     * const inscricoes = await prisma.inscricoes.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends inscricoesCreateManyArgs>(args?: SelectSubset<T, inscricoesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Inscricoes and returns the data saved in the database.
+     * @param {inscricoesCreateManyAndReturnArgs} args - Arguments to create many Inscricoes.
+     * @example
+     * // Create many Inscricoes
+     * const inscricoes = await prisma.inscricoes.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Inscricoes and only return the `id`
+     * const inscricoesWithIdOnly = await prisma.inscricoes.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends inscricoesCreateManyAndReturnArgs>(args?: SelectSubset<T, inscricoesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Inscricoes.
+     * @param {inscricoesDeleteArgs} args - Arguments to delete one Inscricoes.
+     * @example
+     * // Delete one Inscricoes
+     * const Inscricoes = await prisma.inscricoes.delete({
+     *   where: {
+     *     // ... filter to delete one Inscricoes
+     *   }
+     * })
+     * 
+     */
+    delete<T extends inscricoesDeleteArgs>(args: SelectSubset<T, inscricoesDeleteArgs<ExtArgs>>): Prisma__inscricoesClient<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Inscricoes.
+     * @param {inscricoesUpdateArgs} args - Arguments to update one Inscricoes.
+     * @example
+     * // Update one Inscricoes
+     * const inscricoes = await prisma.inscricoes.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends inscricoesUpdateArgs>(args: SelectSubset<T, inscricoesUpdateArgs<ExtArgs>>): Prisma__inscricoesClient<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Inscricoes.
+     * @param {inscricoesDeleteManyArgs} args - Arguments to filter Inscricoes to delete.
+     * @example
+     * // Delete a few Inscricoes
+     * const { count } = await prisma.inscricoes.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends inscricoesDeleteManyArgs>(args?: SelectSubset<T, inscricoesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Inscricoes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {inscricoesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Inscricoes
+     * const inscricoes = await prisma.inscricoes.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends inscricoesUpdateManyArgs>(args: SelectSubset<T, inscricoesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Inscricoes and returns the data updated in the database.
+     * @param {inscricoesUpdateManyAndReturnArgs} args - Arguments to update many Inscricoes.
+     * @example
+     * // Update many Inscricoes
+     * const inscricoes = await prisma.inscricoes.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Inscricoes and only return the `id`
+     * const inscricoesWithIdOnly = await prisma.inscricoes.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends inscricoesUpdateManyAndReturnArgs>(args: SelectSubset<T, inscricoesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Inscricoes.
+     * @param {inscricoesUpsertArgs} args - Arguments to update or create a Inscricoes.
+     * @example
+     * // Update or create a Inscricoes
+     * const inscricoes = await prisma.inscricoes.upsert({
+     *   create: {
+     *     // ... data to create a Inscricoes
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Inscricoes we want to update
+     *   }
+     * })
+     */
+    upsert<T extends inscricoesUpsertArgs>(args: SelectSubset<T, inscricoesUpsertArgs<ExtArgs>>): Prisma__inscricoesClient<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Inscricoes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {inscricoesCountArgs} args - Arguments to filter Inscricoes to count.
+     * @example
+     * // Count the number of Inscricoes
+     * const count = await prisma.inscricoes.count({
+     *   where: {
+     *     // ... the filter for the Inscricoes we want to count
+     *   }
+     * })
+    **/
+    count<T extends inscricoesCountArgs>(
+      args?: Subset<T, inscricoesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InscricoesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Inscricoes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InscricoesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InscricoesAggregateArgs>(args: Subset<T, InscricoesAggregateArgs>): Prisma.PrismaPromise<GetInscricoesAggregateType<T>>
+
+    /**
+     * Group by Inscricoes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {inscricoesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends inscricoesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: inscricoesGroupByArgs['orderBy'] }
+        : { orderBy?: inscricoesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, inscricoesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInscricoesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the inscricoes model
+   */
+  readonly fields: inscricoesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for inscricoes.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__inscricoesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the inscricoes model
+   */
+  interface inscricoesFieldRefs {
+    readonly id: FieldRef<"inscricoes", 'Int'>
+    readonly encontro_id: FieldRef<"inscricoes", 'String'>
+    readonly mentorado_id: FieldRef<"inscricoes", 'String'>
+    readonly UNIQUE: FieldRef<"inscricoes", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * inscricoes findUnique
+   */
+  export type inscricoesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Filter, which inscricoes to fetch.
+     */
+    where: inscricoesWhereUniqueInput
+  }
+
+  /**
+   * inscricoes findUniqueOrThrow
+   */
+  export type inscricoesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Filter, which inscricoes to fetch.
+     */
+    where: inscricoesWhereUniqueInput
+  }
+
+  /**
+   * inscricoes findFirst
+   */
+  export type inscricoesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Filter, which inscricoes to fetch.
+     */
+    where?: inscricoesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of inscricoes to fetch.
+     */
+    orderBy?: inscricoesOrderByWithRelationInput | inscricoesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for inscricoes.
+     */
+    cursor?: inscricoesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` inscricoes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` inscricoes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of inscricoes.
+     */
+    distinct?: InscricoesScalarFieldEnum | InscricoesScalarFieldEnum[]
+  }
+
+  /**
+   * inscricoes findFirstOrThrow
+   */
+  export type inscricoesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Filter, which inscricoes to fetch.
+     */
+    where?: inscricoesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of inscricoes to fetch.
+     */
+    orderBy?: inscricoesOrderByWithRelationInput | inscricoesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for inscricoes.
+     */
+    cursor?: inscricoesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` inscricoes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` inscricoes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of inscricoes.
+     */
+    distinct?: InscricoesScalarFieldEnum | InscricoesScalarFieldEnum[]
+  }
+
+  /**
+   * inscricoes findMany
+   */
+  export type inscricoesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Filter, which inscricoes to fetch.
+     */
+    where?: inscricoesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of inscricoes to fetch.
+     */
+    orderBy?: inscricoesOrderByWithRelationInput | inscricoesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing inscricoes.
+     */
+    cursor?: inscricoesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` inscricoes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` inscricoes.
+     */
+    skip?: number
+    distinct?: InscricoesScalarFieldEnum | InscricoesScalarFieldEnum[]
+  }
+
+  /**
+   * inscricoes create
+   */
+  export type inscricoesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * The data needed to create a inscricoes.
+     */
+    data: XOR<inscricoesCreateInput, inscricoesUncheckedCreateInput>
+  }
+
+  /**
+   * inscricoes createMany
+   */
+  export type inscricoesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many inscricoes.
+     */
+    data: inscricoesCreateManyInput | inscricoesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * inscricoes createManyAndReturn
+   */
+  export type inscricoesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * The data used to create many inscricoes.
+     */
+    data: inscricoesCreateManyInput | inscricoesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * inscricoes update
+   */
+  export type inscricoesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * The data needed to update a inscricoes.
+     */
+    data: XOR<inscricoesUpdateInput, inscricoesUncheckedUpdateInput>
+    /**
+     * Choose, which inscricoes to update.
+     */
+    where: inscricoesWhereUniqueInput
+  }
+
+  /**
+   * inscricoes updateMany
+   */
+  export type inscricoesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update inscricoes.
+     */
+    data: XOR<inscricoesUpdateManyMutationInput, inscricoesUncheckedUpdateManyInput>
+    /**
+     * Filter which inscricoes to update
+     */
+    where?: inscricoesWhereInput
+    /**
+     * Limit how many inscricoes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * inscricoes updateManyAndReturn
+   */
+  export type inscricoesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * The data used to update inscricoes.
+     */
+    data: XOR<inscricoesUpdateManyMutationInput, inscricoesUncheckedUpdateManyInput>
+    /**
+     * Filter which inscricoes to update
+     */
+    where?: inscricoesWhereInput
+    /**
+     * Limit how many inscricoes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * inscricoes upsert
+   */
+  export type inscricoesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * The filter to search for the inscricoes to update in case it exists.
+     */
+    where: inscricoesWhereUniqueInput
+    /**
+     * In case the inscricoes found by the `where` argument doesn't exist, create a new inscricoes with this data.
+     */
+    create: XOR<inscricoesCreateInput, inscricoesUncheckedCreateInput>
+    /**
+     * In case the inscricoes was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<inscricoesUpdateInput, inscricoesUncheckedUpdateInput>
+  }
+
+  /**
+   * inscricoes delete
+   */
+  export type inscricoesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Filter which inscricoes to delete.
+     */
+    where: inscricoesWhereUniqueInput
+  }
+
+  /**
+   * inscricoes deleteMany
+   */
+  export type inscricoesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which inscricoes to delete
+     */
+    where?: inscricoesWhereInput
+    /**
+     * Limit how many inscricoes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * inscricoes without action
+   */
+  export type inscricoesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -5642,6 +8954,35 @@ export namespace Prisma {
   };
 
   export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+  export const EncontrosScalarFieldEnum: {
+    id: 'id',
+    nome: 'nome',
+    data: 'data',
+    vagas_max: 'vagas_max'
+  };
+
+  export type EncontrosScalarFieldEnum = (typeof EncontrosScalarFieldEnum)[keyof typeof EncontrosScalarFieldEnum]
+
+
+  export const MentoradosScalarFieldEnum: {
+    id: 'id',
+    nome: 'nome',
+    email: 'email'
+  };
+
+  export type MentoradosScalarFieldEnum = (typeof MentoradosScalarFieldEnum)[keyof typeof MentoradosScalarFieldEnum]
+
+
+  export const InscricoesScalarFieldEnum: {
+    id: 'id',
+    encontro_id: 'encontro_id',
+    mentorado_id: 'mentorado_id',
+    UNIQUE: 'UNIQUE'
+  };
+
+  export type InscricoesScalarFieldEnum = (typeof InscricoesScalarFieldEnum)[keyof typeof InscricoesScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5719,6 +9060,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -6013,6 +9368,148 @@ export namespace Prisma {
     expiresAt?: DateTimeWithAggregatesFilter<"Verification"> | Date | string
     createdAt?: DateTimeNullableWithAggregatesFilter<"Verification"> | Date | string | null
     updatedAt?: DateTimeNullableWithAggregatesFilter<"Verification"> | Date | string | null
+  }
+
+  export type encontrosWhereInput = {
+    AND?: encontrosWhereInput | encontrosWhereInput[]
+    OR?: encontrosWhereInput[]
+    NOT?: encontrosWhereInput | encontrosWhereInput[]
+    id?: IntFilter<"encontros"> | number
+    nome?: StringFilter<"encontros"> | string
+    data?: DateTimeNullableFilter<"encontros"> | Date | string | null
+    vagas_max?: IntFilter<"encontros"> | number
+  }
+
+  export type encontrosOrderByWithRelationInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    data?: SortOrderInput | SortOrder
+    vagas_max?: SortOrder
+  }
+
+  export type encontrosWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: encontrosWhereInput | encontrosWhereInput[]
+    OR?: encontrosWhereInput[]
+    NOT?: encontrosWhereInput | encontrosWhereInput[]
+    nome?: StringFilter<"encontros"> | string
+    data?: DateTimeNullableFilter<"encontros"> | Date | string | null
+    vagas_max?: IntFilter<"encontros"> | number
+  }, "id">
+
+  export type encontrosOrderByWithAggregationInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    data?: SortOrderInput | SortOrder
+    vagas_max?: SortOrder
+    _count?: encontrosCountOrderByAggregateInput
+    _avg?: encontrosAvgOrderByAggregateInput
+    _max?: encontrosMaxOrderByAggregateInput
+    _min?: encontrosMinOrderByAggregateInput
+    _sum?: encontrosSumOrderByAggregateInput
+  }
+
+  export type encontrosScalarWhereWithAggregatesInput = {
+    AND?: encontrosScalarWhereWithAggregatesInput | encontrosScalarWhereWithAggregatesInput[]
+    OR?: encontrosScalarWhereWithAggregatesInput[]
+    NOT?: encontrosScalarWhereWithAggregatesInput | encontrosScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"encontros"> | number
+    nome?: StringWithAggregatesFilter<"encontros"> | string
+    data?: DateTimeNullableWithAggregatesFilter<"encontros"> | Date | string | null
+    vagas_max?: IntWithAggregatesFilter<"encontros"> | number
+  }
+
+  export type mentoradosWhereInput = {
+    AND?: mentoradosWhereInput | mentoradosWhereInput[]
+    OR?: mentoradosWhereInput[]
+    NOT?: mentoradosWhereInput | mentoradosWhereInput[]
+    id?: IntFilter<"mentorados"> | number
+    nome?: StringFilter<"mentorados"> | string
+    email?: StringFilter<"mentorados"> | string
+  }
+
+  export type mentoradosOrderByWithRelationInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    email?: SortOrder
+  }
+
+  export type mentoradosWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: mentoradosWhereInput | mentoradosWhereInput[]
+    OR?: mentoradosWhereInput[]
+    NOT?: mentoradosWhereInput | mentoradosWhereInput[]
+    nome?: StringFilter<"mentorados"> | string
+    email?: StringFilter<"mentorados"> | string
+  }, "id">
+
+  export type mentoradosOrderByWithAggregationInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    email?: SortOrder
+    _count?: mentoradosCountOrderByAggregateInput
+    _avg?: mentoradosAvgOrderByAggregateInput
+    _max?: mentoradosMaxOrderByAggregateInput
+    _min?: mentoradosMinOrderByAggregateInput
+    _sum?: mentoradosSumOrderByAggregateInput
+  }
+
+  export type mentoradosScalarWhereWithAggregatesInput = {
+    AND?: mentoradosScalarWhereWithAggregatesInput | mentoradosScalarWhereWithAggregatesInput[]
+    OR?: mentoradosScalarWhereWithAggregatesInput[]
+    NOT?: mentoradosScalarWhereWithAggregatesInput | mentoradosScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"mentorados"> | number
+    nome?: StringWithAggregatesFilter<"mentorados"> | string
+    email?: StringWithAggregatesFilter<"mentorados"> | string
+  }
+
+  export type inscricoesWhereInput = {
+    AND?: inscricoesWhereInput | inscricoesWhereInput[]
+    OR?: inscricoesWhereInput[]
+    NOT?: inscricoesWhereInput | inscricoesWhereInput[]
+    id?: IntFilter<"inscricoes"> | number
+    encontro_id?: StringFilter<"inscricoes"> | string
+    mentorado_id?: StringFilter<"inscricoes"> | string
+    UNIQUE?: StringFilter<"inscricoes"> | string
+  }
+
+  export type inscricoesOrderByWithRelationInput = {
+    id?: SortOrder
+    encontro_id?: SortOrder
+    mentorado_id?: SortOrder
+    UNIQUE?: SortOrder
+  }
+
+  export type inscricoesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: inscricoesWhereInput | inscricoesWhereInput[]
+    OR?: inscricoesWhereInput[]
+    NOT?: inscricoesWhereInput | inscricoesWhereInput[]
+    encontro_id?: StringFilter<"inscricoes"> | string
+    mentorado_id?: StringFilter<"inscricoes"> | string
+    UNIQUE?: StringFilter<"inscricoes"> | string
+  }, "id">
+
+  export type inscricoesOrderByWithAggregationInput = {
+    id?: SortOrder
+    encontro_id?: SortOrder
+    mentorado_id?: SortOrder
+    UNIQUE?: SortOrder
+    _count?: inscricoesCountOrderByAggregateInput
+    _avg?: inscricoesAvgOrderByAggregateInput
+    _max?: inscricoesMaxOrderByAggregateInput
+    _min?: inscricoesMinOrderByAggregateInput
+    _sum?: inscricoesSumOrderByAggregateInput
+  }
+
+  export type inscricoesScalarWhereWithAggregatesInput = {
+    AND?: inscricoesScalarWhereWithAggregatesInput | inscricoesScalarWhereWithAggregatesInput[]
+    OR?: inscricoesScalarWhereWithAggregatesInput[]
+    NOT?: inscricoesScalarWhereWithAggregatesInput | inscricoesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"inscricoes"> | number
+    encontro_id?: StringWithAggregatesFilter<"inscricoes"> | string
+    mentorado_id?: StringWithAggregatesFilter<"inscricoes"> | string
+    UNIQUE?: StringWithAggregatesFilter<"inscricoes"> | string
   }
 
   export type UserCreateInput = {
@@ -6343,6 +9840,137 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type encontrosCreateInput = {
+    nome: string
+    data?: Date | string | null
+    vagas_max: number
+  }
+
+  export type encontrosUncheckedCreateInput = {
+    id?: number
+    nome: string
+    data?: Date | string | null
+    vagas_max: number
+  }
+
+  export type encontrosUpdateInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vagas_max?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type encontrosUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vagas_max?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type encontrosCreateManyInput = {
+    id?: number
+    nome: string
+    data?: Date | string | null
+    vagas_max: number
+  }
+
+  export type encontrosUpdateManyMutationInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vagas_max?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type encontrosUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vagas_max?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type mentoradosCreateInput = {
+    nome: string
+    email: string
+  }
+
+  export type mentoradosUncheckedCreateInput = {
+    id?: number
+    nome: string
+    email: string
+  }
+
+  export type mentoradosUpdateInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type mentoradosUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type mentoradosCreateManyInput = {
+    id?: number
+    nome: string
+    email: string
+  }
+
+  export type mentoradosUpdateManyMutationInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type mentoradosUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type inscricoesCreateInput = {
+    encontro_id: string
+    mentorado_id: string
+    UNIQUE: string
+  }
+
+  export type inscricoesUncheckedCreateInput = {
+    id?: number
+    encontro_id: string
+    mentorado_id: string
+    UNIQUE: string
+  }
+
+  export type inscricoesUpdateInput = {
+    encontro_id?: StringFieldUpdateOperationsInput | string
+    mentorado_id?: StringFieldUpdateOperationsInput | string
+    UNIQUE?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type inscricoesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    encontro_id?: StringFieldUpdateOperationsInput | string
+    mentorado_id?: StringFieldUpdateOperationsInput | string
+    UNIQUE?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type inscricoesCreateManyInput = {
+    id?: number
+    encontro_id: string
+    mentorado_id: string
+    UNIQUE: string
+  }
+
+  export type inscricoesUpdateManyMutationInput = {
+    encontro_id?: StringFieldUpdateOperationsInput | string
+    mentorado_id?: StringFieldUpdateOperationsInput | string
+    UNIQUE?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type inscricoesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    encontro_id?: StringFieldUpdateOperationsInput | string
+    mentorado_id?: StringFieldUpdateOperationsInput | string
+    UNIQUE?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -6640,6 +10268,119 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type encontrosCountOrderByAggregateInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    data?: SortOrder
+    vagas_max?: SortOrder
+  }
+
+  export type encontrosAvgOrderByAggregateInput = {
+    id?: SortOrder
+    vagas_max?: SortOrder
+  }
+
+  export type encontrosMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    data?: SortOrder
+    vagas_max?: SortOrder
+  }
+
+  export type encontrosMinOrderByAggregateInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    data?: SortOrder
+    vagas_max?: SortOrder
+  }
+
+  export type encontrosSumOrderByAggregateInput = {
+    id?: SortOrder
+    vagas_max?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type mentoradosCountOrderByAggregateInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    email?: SortOrder
+  }
+
+  export type mentoradosAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type mentoradosMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    email?: SortOrder
+  }
+
+  export type mentoradosMinOrderByAggregateInput = {
+    id?: SortOrder
+    nome?: SortOrder
+    email?: SortOrder
+  }
+
+  export type mentoradosSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type inscricoesCountOrderByAggregateInput = {
+    id?: SortOrder
+    encontro_id?: SortOrder
+    mentorado_id?: SortOrder
+    UNIQUE?: SortOrder
+  }
+
+  export type inscricoesAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type inscricoesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    encontro_id?: SortOrder
+    mentorado_id?: SortOrder
+    UNIQUE?: SortOrder
+  }
+
+  export type inscricoesMinOrderByAggregateInput = {
+    id?: SortOrder
+    encontro_id?: SortOrder
+    mentorado_id?: SortOrder
+    UNIQUE?: SortOrder
+  }
+
+  export type inscricoesSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
   export type SessionCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -6770,6 +10511,14 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAccountsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -6917,6 +10666,33 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type SessionCreateWithoutUserInput = {

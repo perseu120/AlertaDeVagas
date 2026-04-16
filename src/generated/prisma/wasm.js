@@ -166,6 +166,26 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.EncontrosScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  data: 'data',
+  vagas_max: 'vagas_max'
+};
+
+exports.Prisma.MentoradosScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  email: 'email'
+};
+
+exports.Prisma.InscricoesScalarFieldEnum = {
+  id: 'id',
+  encontro_id: 'encontro_id',
+  mentorado_id: 'mentorado_id',
+  UNIQUE: 'UNIQUE'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -186,7 +206,10 @@ exports.Prisma.ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  encontros: 'encontros',
+  mentorados: 'mentorados',
+  inscricoes: 'inscricoes'
 };
 
 /**
