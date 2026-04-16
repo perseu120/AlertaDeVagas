@@ -1,5 +1,6 @@
 import Form from '@/components/vagas/create-form';
 import Breadcrumbs from '@/components/vagas/breadcrumbs';
+import { createJob } from '@/lib/actions';
 
 export default async function Page() {
 
@@ -22,7 +23,7 @@ export default async function Page() {
                     },
                 ]}
             />
-            <Form customers={customers} />
+            <Form customers={customers} action={createJob} />
         </main>
     );
 }

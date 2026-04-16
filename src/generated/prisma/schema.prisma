@@ -15,15 +15,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
+  id                String    @id
+  name              String
+  email             String
+  emailVerified     Boolean
+  image             String?
+  area              String?
+  salaryExpectation String?
+  createdAt         DateTime
+  updatedAt         DateTime
+  sessions          Session[]
+  accounts          Account[]
 
   @@unique([email])
   @@map("user")
@@ -75,4 +77,18 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Job {
+  id        String   @id @default(cuid())
+  company   String
+  role      String
+  area      String
+  salary    String
+  status    String   @default("open")
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("job")
 }
