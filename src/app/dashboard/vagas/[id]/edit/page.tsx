@@ -1,8 +1,8 @@
 import Form from '@/components/vagas/create-form';
 import Breadcrumbs from '@/components/vagas/breadcrumbs';
 
-export default async function Page(props: { params: { id: string } }) {
-    const { id } = props.params;
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+    const { id } = await props.params;
 
     // 🔥 Vaga mockada
     const invoice = {

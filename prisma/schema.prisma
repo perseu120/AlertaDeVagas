@@ -11,7 +11,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -82,17 +81,22 @@ model encontros {
   nome      String
   data      DateTime?
   vagas_max Int
+  inscricoes inscricoes[]
 }
 
 model mentorados {
   id    Int @id @default(autoincrement())
   nome  String
   email String
+  inscricoes inscricoes[]
 }
 
 model inscricoes {
-  id    Int @id @default(autoincrement())
-  encontro_id  String
-  mentorado_id String
-  UNIQUE String
+  id           Int    @id @default(autoincrement())
+  encontro_id  Int
+  mentorado_id Int
+  encontro      encontros @relation(fields: [encontro_id], references: [id])
+  mentorado     mentorados @relation(fields: [mentorado_id], references: [id])
+
+  @@unique([encontro_id, mentorado_id])
 }

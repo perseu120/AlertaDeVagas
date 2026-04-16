@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/library.js';
+import * as runtime from './runtime/client.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -55,17 +55,19 @@ export type inscricoes = $Result.DefaultSelection<Prisma.$inscricoesPayload>
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
  *
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -76,13 +78,15 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Users
    * const users = await prisma.user.findMany()
    * ```
    *
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   * Read more in our [docs](https://pris.ly/d/client).
    */
 
   constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
@@ -98,13 +102,6 @@ export class PrismaClient<
    */
   $disconnect(): $Utils.JsPromise<void>;
 
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
-
 /**
    * Executes a prepared raw query and returns the number of affected rows.
    * @example
@@ -112,7 +109,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -124,7 +121,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -135,7 +132,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -147,7 +144,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -163,12 +160,11 @@ export class PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
-
 
   $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
     extArgs: ExtArgs
@@ -283,14 +279,6 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics
-   */
-  export type Metrics = runtime.Metrics
-  export type Metric<T> = runtime.Metric<T>
-  export type MetricHistogram = runtime.MetricHistogram
-  export type MetricHistogramBucket = runtime.MetricHistogramBucket
-
-  /**
   * Extensions
   */
   export import Extension = $Extensions.UserArgs
@@ -301,11 +289,12 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 7.7.0
+   * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
    */
   export type PrismaVersion = {
     client: string
+    engine: string
   }
 
   export const prismaVersion: PrismaVersion
@@ -315,6 +304,7 @@ export namespace Prisma {
    */
 
 
+  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -695,9 +685,6 @@ export namespace Prisma {
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
 
-  export type Datasources = {
-    db?: Datasource
-  }
 
   interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
     returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
@@ -1259,32 +1246,32 @@ export namespace Prisma {
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
     /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasources?: Datasources
-    /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasourceUrl?: string
-    /**
      * @default "colorless"
      */
     errorFormat?: ErrorFormat
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     * Read more in our [docs](https://pris.ly/d/logging).
      */
     log?: (LogLevel | LogDefinition)[]
     /**
@@ -1297,6 +1284,14 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory
+    /**
+     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+     */
+    accelerateUrl?: string
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -1312,6 +1307,22 @@ export namespace Prisma {
      * ```
      */
     omit?: Prisma.GlobalOmitConfig
+    /**
+     * SQL commenter plugins that add metadata to SQL queries as comments.
+     * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   adapter,
+     *   comments: [
+     *     traceContext(),
+     *     queryInsights(),
+     *   ],
+     * })
+     * ```
+     */
+    comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
@@ -1330,10 +1341,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -1373,25 +1389,6 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
-
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -1447,6 +1444,68 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AccountWhereInput
+  }
+
+
+  /**
+   * Count Type EncontrosCountOutputType
+   */
+
+  export type EncontrosCountOutputType = {
+    inscricoes: number
+  }
+
+  export type EncontrosCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    inscricoes?: boolean | EncontrosCountOutputTypeCountInscricoesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * EncontrosCountOutputType without action
+   */
+  export type EncontrosCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EncontrosCountOutputType
+     */
+    select?: EncontrosCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * EncontrosCountOutputType without action
+   */
+  export type EncontrosCountOutputTypeCountInscricoesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: inscricoesWhereInput
+  }
+
+
+  /**
+   * Count Type MentoradosCountOutputType
+   */
+
+  export type MentoradosCountOutputType = {
+    inscricoes: number
+  }
+
+  export type MentoradosCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    inscricoes?: boolean | MentoradosCountOutputTypeCountInscricoesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MentoradosCountOutputType without action
+   */
+  export type MentoradosCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MentoradosCountOutputType
+     */
+    select?: MentoradosCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MentoradosCountOutputType without action
+   */
+  export type MentoradosCountOutputTypeCountInscricoesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: inscricoesWhereInput
   }
 
 
@@ -2320,6 +2379,11 @@ export namespace Prisma {
      * Skip the first `n` Users.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
@@ -3457,6 +3521,11 @@ export namespace Prisma {
      * Skip the first `n` Sessions.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sessions.
+     */
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
   }
 
@@ -4619,6 +4688,11 @@ export namespace Prisma {
      * Skip the first `n` Accounts.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Accounts.
+     */
     distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
   }
 
@@ -5655,6 +5729,11 @@ export namespace Prisma {
      * Skip the first `n` Verifications.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Verifications.
+     */
     distinct?: VerificationScalarFieldEnum | VerificationScalarFieldEnum[]
   }
 
@@ -6039,6 +6118,8 @@ export namespace Prisma {
     nome?: boolean
     data?: boolean
     vagas_max?: boolean
+    inscricoes?: boolean | encontros$inscricoesArgs<ExtArgs>
+    _count?: boolean | EncontrosCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["encontros"]>
 
   export type encontrosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6063,10 +6144,18 @@ export namespace Prisma {
   }
 
   export type encontrosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "data" | "vagas_max", ExtArgs["result"]["encontros"]>
+  export type encontrosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    inscricoes?: boolean | encontros$inscricoesArgs<ExtArgs>
+    _count?: boolean | EncontrosCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type encontrosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type encontrosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $encontrosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "encontros"
-    objects: {}
+    objects: {
+      inscricoes: Prisma.$inscricoesPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       nome: string
@@ -6466,6 +6555,7 @@ export namespace Prisma {
    */
   export interface Prisma__encontrosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    inscricoes<T extends encontros$inscricoesArgs<ExtArgs> = {}>(args?: Subset<T, encontros$inscricoesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6516,6 +6606,10 @@ export namespace Prisma {
      */
     omit?: encontrosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
+    /**
      * Filter, which encontros to fetch.
      */
     where: encontrosWhereUniqueInput
@@ -6534,6 +6628,10 @@ export namespace Prisma {
      */
     omit?: encontrosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
+    /**
      * Filter, which encontros to fetch.
      */
     where: encontrosWhereUniqueInput
@@ -6551,6 +6649,10 @@ export namespace Prisma {
      * Omit specific fields from the encontros
      */
     omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
     /**
      * Filter, which encontros to fetch.
      */
@@ -6600,6 +6702,10 @@ export namespace Prisma {
      */
     omit?: encontrosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
+    /**
      * Filter, which encontros to fetch.
      */
     where?: encontrosWhereInput
@@ -6648,6 +6754,10 @@ export namespace Prisma {
      */
     omit?: encontrosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
+    /**
      * Filter, which encontros to fetch.
      */
     where?: encontrosWhereInput
@@ -6675,6 +6785,11 @@ export namespace Prisma {
      * Skip the first `n` encontros.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of encontros.
+     */
     distinct?: EncontrosScalarFieldEnum | EncontrosScalarFieldEnum[]
   }
 
@@ -6690,6 +6805,10 @@ export namespace Prisma {
      * Omit specific fields from the encontros
      */
     omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
     /**
      * The data needed to create a encontros.
      */
@@ -6738,6 +6857,10 @@ export namespace Prisma {
      * Omit specific fields from the encontros
      */
     omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
     /**
      * The data needed to update a encontros.
      */
@@ -6805,6 +6928,10 @@ export namespace Prisma {
      */
     omit?: encontrosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
+    /**
      * The filter to search for the encontros to update in case it exists.
      */
     where: encontrosWhereUniqueInput
@@ -6831,6 +6958,10 @@ export namespace Prisma {
      */
     omit?: encontrosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
+    /**
      * Filter which encontros to delete.
      */
     where: encontrosWhereUniqueInput
@@ -6851,6 +6982,30 @@ export namespace Prisma {
   }
 
   /**
+   * encontros.inscricoes
+   */
+  export type encontros$inscricoesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
+    where?: inscricoesWhereInput
+    orderBy?: inscricoesOrderByWithRelationInput | inscricoesOrderByWithRelationInput[]
+    cursor?: inscricoesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InscricoesScalarFieldEnum | InscricoesScalarFieldEnum[]
+  }
+
+  /**
    * encontros without action
    */
   export type encontrosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6862,6 +7017,10 @@ export namespace Prisma {
      * Omit specific fields from the encontros
      */
     omit?: encontrosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: encontrosInclude<ExtArgs> | null
   }
 
 
@@ -7047,6 +7206,8 @@ export namespace Prisma {
     id?: boolean
     nome?: boolean
     email?: boolean
+    inscricoes?: boolean | mentorados$inscricoesArgs<ExtArgs>
+    _count?: boolean | MentoradosCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mentorados"]>
 
   export type mentoradosSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7068,10 +7229,18 @@ export namespace Prisma {
   }
 
   export type mentoradosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "email", ExtArgs["result"]["mentorados"]>
+  export type mentoradosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    inscricoes?: boolean | mentorados$inscricoesArgs<ExtArgs>
+    _count?: boolean | MentoradosCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type mentoradosIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type mentoradosIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $mentoradosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "mentorados"
-    objects: {}
+    objects: {
+      inscricoes: Prisma.$inscricoesPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       nome: string
@@ -7470,6 +7639,7 @@ export namespace Prisma {
    */
   export interface Prisma__mentoradosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    inscricoes<T extends mentorados$inscricoesArgs<ExtArgs> = {}>(args?: Subset<T, mentorados$inscricoesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$inscricoesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7519,6 +7689,10 @@ export namespace Prisma {
      */
     omit?: mentoradosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
+    /**
      * Filter, which mentorados to fetch.
      */
     where: mentoradosWhereUniqueInput
@@ -7537,6 +7711,10 @@ export namespace Prisma {
      */
     omit?: mentoradosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
+    /**
      * Filter, which mentorados to fetch.
      */
     where: mentoradosWhereUniqueInput
@@ -7554,6 +7732,10 @@ export namespace Prisma {
      * Omit specific fields from the mentorados
      */
     omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
     /**
      * Filter, which mentorados to fetch.
      */
@@ -7603,6 +7785,10 @@ export namespace Prisma {
      */
     omit?: mentoradosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
+    /**
      * Filter, which mentorados to fetch.
      */
     where?: mentoradosWhereInput
@@ -7651,6 +7837,10 @@ export namespace Prisma {
      */
     omit?: mentoradosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
+    /**
      * Filter, which mentorados to fetch.
      */
     where?: mentoradosWhereInput
@@ -7678,6 +7868,11 @@ export namespace Prisma {
      * Skip the first `n` mentorados.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of mentorados.
+     */
     distinct?: MentoradosScalarFieldEnum | MentoradosScalarFieldEnum[]
   }
 
@@ -7693,6 +7888,10 @@ export namespace Prisma {
      * Omit specific fields from the mentorados
      */
     omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
     /**
      * The data needed to create a mentorados.
      */
@@ -7741,6 +7940,10 @@ export namespace Prisma {
      * Omit specific fields from the mentorados
      */
     omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
     /**
      * The data needed to update a mentorados.
      */
@@ -7808,6 +8011,10 @@ export namespace Prisma {
      */
     omit?: mentoradosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
+    /**
      * The filter to search for the mentorados to update in case it exists.
      */
     where: mentoradosWhereUniqueInput
@@ -7834,6 +8041,10 @@ export namespace Prisma {
      */
     omit?: mentoradosOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
+    /**
      * Filter which mentorados to delete.
      */
     where: mentoradosWhereUniqueInput
@@ -7854,6 +8065,30 @@ export namespace Prisma {
   }
 
   /**
+   * mentorados.inscricoes
+   */
+  export type mentorados$inscricoesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the inscricoes
+     */
+    select?: inscricoesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the inscricoes
+     */
+    omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
+    where?: inscricoesWhereInput
+    orderBy?: inscricoesOrderByWithRelationInput | inscricoesOrderByWithRelationInput[]
+    cursor?: inscricoesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InscricoesScalarFieldEnum | InscricoesScalarFieldEnum[]
+  }
+
+  /**
    * mentorados without action
    */
   export type mentoradosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7865,6 +8100,10 @@ export namespace Prisma {
      * Omit specific fields from the mentorados
      */
     omit?: mentoradosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: mentoradosInclude<ExtArgs> | null
   }
 
 
@@ -7882,62 +8121,64 @@ export namespace Prisma {
 
   export type InscricoesAvgAggregateOutputType = {
     id: number | null
+    encontro_id: number | null
+    mentorado_id: number | null
   }
 
   export type InscricoesSumAggregateOutputType = {
     id: number | null
+    encontro_id: number | null
+    mentorado_id: number | null
   }
 
   export type InscricoesMinAggregateOutputType = {
     id: number | null
-    encontro_id: string | null
-    mentorado_id: string | null
-    UNIQUE: string | null
+    encontro_id: number | null
+    mentorado_id: number | null
   }
 
   export type InscricoesMaxAggregateOutputType = {
     id: number | null
-    encontro_id: string | null
-    mentorado_id: string | null
-    UNIQUE: string | null
+    encontro_id: number | null
+    mentorado_id: number | null
   }
 
   export type InscricoesCountAggregateOutputType = {
     id: number
     encontro_id: number
     mentorado_id: number
-    UNIQUE: number
     _all: number
   }
 
 
   export type InscricoesAvgAggregateInputType = {
     id?: true
+    encontro_id?: true
+    mentorado_id?: true
   }
 
   export type InscricoesSumAggregateInputType = {
     id?: true
+    encontro_id?: true
+    mentorado_id?: true
   }
 
   export type InscricoesMinAggregateInputType = {
     id?: true
     encontro_id?: true
     mentorado_id?: true
-    UNIQUE?: true
   }
 
   export type InscricoesMaxAggregateInputType = {
     id?: true
     encontro_id?: true
     mentorado_id?: true
-    UNIQUE?: true
   }
 
   export type InscricoesCountAggregateInputType = {
     id?: true
     encontro_id?: true
     mentorado_id?: true
-    UNIQUE?: true
     _all?: true
   }
 
@@ -8029,9 +8270,8 @@ export namespace Prisma {
 
   export type InscricoesGroupByOutputType = {
     id: number
-    encontro_id: string
-    mentorado_id: string
-    UNIQUE: string
+    encontro_id: number
+    mentorado_id: number
     _count: InscricoesCountAggregateOutputType | null
     _avg: InscricoesAvgAggregateOutputType | null
     _sum: InscricoesSumAggregateOutputType | null
@@ -8057,40 +8297,56 @@ export namespace Prisma {
     id?: boolean
     encontro_id?: boolean
     mentorado_id?: boolean
-    UNIQUE?: boolean
+    encontro?: boolean | encontrosDefaultArgs<ExtArgs>
+    mentorado?: boolean | mentoradosDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["inscricoes"]>
 
   export type inscricoesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     encontro_id?: boolean
     mentorado_id?: boolean
-    UNIQUE?: boolean
+    encontro?: boolean | encontrosDefaultArgs<ExtArgs>
+    mentorado?: boolean | mentoradosDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["inscricoes"]>
 
   export type inscricoesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     encontro_id?: boolean
     mentorado_id?: boolean
-    UNIQUE?: boolean
+    encontro?: boolean | encontrosDefaultArgs<ExtArgs>
+    mentorado?: boolean | mentoradosDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["inscricoes"]>
 
   export type inscricoesSelectScalar = {
     id?: boolean
     encontro_id?: boolean
     mentorado_id?: boolean
-    UNIQUE?: boolean
   }
 
-  export type inscricoesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "encontro_id" | "mentorado_id" | "UNIQUE", ExtArgs["result"]["inscricoes"]>
+  export type inscricoesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "encontro_id" | "mentorado_id", ExtArgs["result"]["inscricoes"]>
+  export type inscricoesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    encontro?: boolean | encontrosDefaultArgs<ExtArgs>
+    mentorado?: boolean | mentoradosDefaultArgs<ExtArgs>
+  }
+  export type inscricoesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    encontro?: boolean | encontrosDefaultArgs<ExtArgs>
+    mentorado?: boolean | mentoradosDefaultArgs<ExtArgs>
+  }
+  export type inscricoesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    encontro?: boolean | encontrosDefaultArgs<ExtArgs>
+    mentorado?: boolean | mentoradosDefaultArgs<ExtArgs>
+  }
 
   export type $inscricoesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "inscricoes"
-    objects: {}
+    objects: {
+      encontro: Prisma.$encontrosPayload<ExtArgs>
+      mentorado: Prisma.$mentoradosPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      encontro_id: string
-      mentorado_id: string
-      UNIQUE: string
+      encontro_id: number
+      mentorado_id: number
     }, ExtArgs["result"]["inscricoes"]>
     composites: {}
   }
@@ -8485,6 +8741,8 @@ export namespace Prisma {
    */
   export interface Prisma__inscricoesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    encontro<T extends encontrosDefaultArgs<ExtArgs> = {}>(args?: Subset<T, encontrosDefaultArgs<ExtArgs>>): Prisma__encontrosClient<$Result.GetResult<Prisma.$encontrosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    mentorado<T extends mentoradosDefaultArgs<ExtArgs> = {}>(args?: Subset<T, mentoradosDefaultArgs<ExtArgs>>): Prisma__mentoradosClient<$Result.GetResult<Prisma.$mentoradosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8515,9 +8773,8 @@ export namespace Prisma {
    */
   interface inscricoesFieldRefs {
     readonly id: FieldRef<"inscricoes", 'Int'>
-    readonly encontro_id: FieldRef<"inscricoes", 'String'>
-    readonly mentorado_id: FieldRef<"inscricoes", 'String'>
-    readonly UNIQUE: FieldRef<"inscricoes", 'String'>
+    readonly encontro_id: FieldRef<"inscricoes", 'Int'>
+    readonly mentorado_id: FieldRef<"inscricoes", 'Int'>
   }
     
 
@@ -8534,6 +8791,10 @@ export namespace Prisma {
      * Omit specific fields from the inscricoes
      */
     omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
     /**
      * Filter, which inscricoes to fetch.
      */
@@ -8553,6 +8814,10 @@ export namespace Prisma {
      */
     omit?: inscricoesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
+    /**
      * Filter, which inscricoes to fetch.
      */
     where: inscricoesWhereUniqueInput
@@ -8570,6 +8835,10 @@ export namespace Prisma {
      * Omit specific fields from the inscricoes
      */
     omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
     /**
      * Filter, which inscricoes to fetch.
      */
@@ -8619,6 +8888,10 @@ export namespace Prisma {
      */
     omit?: inscricoesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
+    /**
      * Filter, which inscricoes to fetch.
      */
     where?: inscricoesWhereInput
@@ -8667,6 +8940,10 @@ export namespace Prisma {
      */
     omit?: inscricoesOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
+    /**
      * Filter, which inscricoes to fetch.
      */
     where?: inscricoesWhereInput
@@ -8694,6 +8971,11 @@ export namespace Prisma {
      * Skip the first `n` inscricoes.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of inscricoes.
+     */
     distinct?: InscricoesScalarFieldEnum | InscricoesScalarFieldEnum[]
   }
 
@@ -8709,6 +8991,10 @@ export namespace Prisma {
      * Omit specific fields from the inscricoes
      */
     omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
     /**
      * The data needed to create a inscricoes.
      */
@@ -8743,6 +9029,10 @@ export namespace Prisma {
      */
     data: inscricoesCreateManyInput | inscricoesCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8757,6 +9047,10 @@ export namespace Prisma {
      * Omit specific fields from the inscricoes
      */
     omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
     /**
      * The data needed to update a inscricoes.
      */
@@ -8809,6 +9103,10 @@ export namespace Prisma {
      * Limit how many inscricoes to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8823,6 +9121,10 @@ export namespace Prisma {
      * Omit specific fields from the inscricoes
      */
     omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
     /**
      * The filter to search for the inscricoes to update in case it exists.
      */
@@ -8849,6 +9151,10 @@ export namespace Prisma {
      * Omit specific fields from the inscricoes
      */
     omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
     /**
      * Filter which inscricoes to delete.
      */
@@ -8881,6 +9187,10 @@ export namespace Prisma {
      * Omit specific fields from the inscricoes
      */
     omit?: inscricoesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: inscricoesInclude<ExtArgs> | null
   }
 
 
@@ -8978,8 +9288,7 @@ export namespace Prisma {
   export const InscricoesScalarFieldEnum: {
     id: 'id',
     encontro_id: 'encontro_id',
-    mentorado_id: 'mentorado_id',
-    UNIQUE: 'UNIQUE'
+    mentorado_id: 'mentorado_id'
   };
 
   export type InscricoesScalarFieldEnum = (typeof InscricoesScalarFieldEnum)[keyof typeof InscricoesScalarFieldEnum]
@@ -9378,6 +9687,7 @@ export namespace Prisma {
     nome?: StringFilter<"encontros"> | string
     data?: DateTimeNullableFilter<"encontros"> | Date | string | null
     vagas_max?: IntFilter<"encontros"> | number
+    inscricoes?: InscricoesListRelationFilter
   }
 
   export type encontrosOrderByWithRelationInput = {
@@ -9385,6 +9695,7 @@ export namespace Prisma {
     nome?: SortOrder
     data?: SortOrderInput | SortOrder
     vagas_max?: SortOrder
+    inscricoes?: inscricoesOrderByRelationAggregateInput
   }
 
   export type encontrosWhereUniqueInput = Prisma.AtLeast<{
@@ -9395,6 +9706,7 @@ export namespace Prisma {
     nome?: StringFilter<"encontros"> | string
     data?: DateTimeNullableFilter<"encontros"> | Date | string | null
     vagas_max?: IntFilter<"encontros"> | number
+    inscricoes?: InscricoesListRelationFilter
   }, "id">
 
   export type encontrosOrderByWithAggregationInput = {
@@ -9426,12 +9738,14 @@ export namespace Prisma {
     id?: IntFilter<"mentorados"> | number
     nome?: StringFilter<"mentorados"> | string
     email?: StringFilter<"mentorados"> | string
+    inscricoes?: InscricoesListRelationFilter
   }
 
   export type mentoradosOrderByWithRelationInput = {
     id?: SortOrder
     nome?: SortOrder
     email?: SortOrder
+    inscricoes?: inscricoesOrderByRelationAggregateInput
   }
 
   export type mentoradosWhereUniqueInput = Prisma.AtLeast<{
@@ -9441,6 +9755,7 @@ export namespace Prisma {
     NOT?: mentoradosWhereInput | mentoradosWhereInput[]
     nome?: StringFilter<"mentorados"> | string
     email?: StringFilter<"mentorados"> | string
+    inscricoes?: InscricoesListRelationFilter
   }, "id">
 
   export type mentoradosOrderByWithAggregationInput = {
@@ -9468,33 +9783,36 @@ export namespace Prisma {
     OR?: inscricoesWhereInput[]
     NOT?: inscricoesWhereInput | inscricoesWhereInput[]
     id?: IntFilter<"inscricoes"> | number
-    encontro_id?: StringFilter<"inscricoes"> | string
-    mentorado_id?: StringFilter<"inscricoes"> | string
-    UNIQUE?: StringFilter<"inscricoes"> | string
+    encontro_id?: IntFilter<"inscricoes"> | number
+    mentorado_id?: IntFilter<"inscricoes"> | number
+    encontro?: XOR<EncontrosScalarRelationFilter, encontrosWhereInput>
+    mentorado?: XOR<MentoradosScalarRelationFilter, mentoradosWhereInput>
   }
 
   export type inscricoesOrderByWithRelationInput = {
     id?: SortOrder
     encontro_id?: SortOrder
     mentorado_id?: SortOrder
-    UNIQUE?: SortOrder
+    encontro?: encontrosOrderByWithRelationInput
+    mentorado?: mentoradosOrderByWithRelationInput
   }
 
   export type inscricoesWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    encontro_id_mentorado_id?: inscricoesEncontro_idMentorado_idCompoundUniqueInput
     AND?: inscricoesWhereInput | inscricoesWhereInput[]
     OR?: inscricoesWhereInput[]
     NOT?: inscricoesWhereInput | inscricoesWhereInput[]
-    encontro_id?: StringFilter<"inscricoes"> | string
-    mentorado_id?: StringFilter<"inscricoes"> | string
-    UNIQUE?: StringFilter<"inscricoes"> | string
-  }, "id">
+    encontro_id?: IntFilter<"inscricoes"> | number
+    mentorado_id?: IntFilter<"inscricoes"> | number
+    encontro?: XOR<EncontrosScalarRelationFilter, encontrosWhereInput>
+    mentorado?: XOR<MentoradosScalarRelationFilter, mentoradosWhereInput>
+  }, "id" | "encontro_id_mentorado_id">
 
   export type inscricoesOrderByWithAggregationInput = {
     id?: SortOrder
     encontro_id?: SortOrder
     mentorado_id?: SortOrder
-    UNIQUE?: SortOrder
     _count?: inscricoesCountOrderByAggregateInput
     _avg?: inscricoesAvgOrderByAggregateInput
     _max?: inscricoesMaxOrderByAggregateInput
@@ -9507,9 +9825,8 @@ export namespace Prisma {
     OR?: inscricoesScalarWhereWithAggregatesInput[]
     NOT?: inscricoesScalarWhereWithAggregatesInput | inscricoesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"inscricoes"> | number
-    encontro_id?: StringWithAggregatesFilter<"inscricoes"> | string
-    mentorado_id?: StringWithAggregatesFilter<"inscricoes"> | string
-    UNIQUE?: StringWithAggregatesFilter<"inscricoes"> | string
+    encontro_id?: IntWithAggregatesFilter<"inscricoes"> | number
+    mentorado_id?: IntWithAggregatesFilter<"inscricoes"> | number
   }
 
   export type UserCreateInput = {
@@ -9844,6 +10161,7 @@ export namespace Prisma {
     nome: string
     data?: Date | string | null
     vagas_max: number
+    inscricoes?: inscricoesCreateNestedManyWithoutEncontroInput
   }
 
   export type encontrosUncheckedCreateInput = {
@@ -9851,12 +10169,14 @@ export namespace Prisma {
     nome: string
     data?: Date | string | null
     vagas_max: number
+    inscricoes?: inscricoesUncheckedCreateNestedManyWithoutEncontroInput
   }
 
   export type encontrosUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
     data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vagas_max?: IntFieldUpdateOperationsInput | number
+    inscricoes?: inscricoesUpdateManyWithoutEncontroNestedInput
   }
 
   export type encontrosUncheckedUpdateInput = {
@@ -9864,6 +10184,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     vagas_max?: IntFieldUpdateOperationsInput | number
+    inscricoes?: inscricoesUncheckedUpdateManyWithoutEncontroNestedInput
   }
 
   export type encontrosCreateManyInput = {
@@ -9889,23 +10210,27 @@ export namespace Prisma {
   export type mentoradosCreateInput = {
     nome: string
     email: string
+    inscricoes?: inscricoesCreateNestedManyWithoutMentoradoInput
   }
 
   export type mentoradosUncheckedCreateInput = {
     id?: number
     nome: string
     email: string
+    inscricoes?: inscricoesUncheckedCreateNestedManyWithoutMentoradoInput
   }
 
   export type mentoradosUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    inscricoes?: inscricoesUpdateManyWithoutMentoradoNestedInput
   }
 
   export type mentoradosUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    inscricoes?: inscricoesUncheckedUpdateManyWithoutMentoradoNestedInput
   }
 
   export type mentoradosCreateManyInput = {
@@ -9926,49 +10251,41 @@ export namespace Prisma {
   }
 
   export type inscricoesCreateInput = {
-    encontro_id: string
-    mentorado_id: string
-    UNIQUE: string
+    encontro: encontrosCreateNestedOneWithoutInscricoesInput
+    mentorado: mentoradosCreateNestedOneWithoutInscricoesInput
   }
 
   export type inscricoesUncheckedCreateInput = {
     id?: number
-    encontro_id: string
-    mentorado_id: string
-    UNIQUE: string
+    encontro_id: number
+    mentorado_id: number
   }
 
   export type inscricoesUpdateInput = {
-    encontro_id?: StringFieldUpdateOperationsInput | string
-    mentorado_id?: StringFieldUpdateOperationsInput | string
-    UNIQUE?: StringFieldUpdateOperationsInput | string
+    encontro?: encontrosUpdateOneRequiredWithoutInscricoesNestedInput
+    mentorado?: mentoradosUpdateOneRequiredWithoutInscricoesNestedInput
   }
 
   export type inscricoesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    encontro_id?: StringFieldUpdateOperationsInput | string
-    mentorado_id?: StringFieldUpdateOperationsInput | string
-    UNIQUE?: StringFieldUpdateOperationsInput | string
+    encontro_id?: IntFieldUpdateOperationsInput | number
+    mentorado_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type inscricoesCreateManyInput = {
     id?: number
-    encontro_id: string
-    mentorado_id: string
-    UNIQUE: string
+    encontro_id: number
+    mentorado_id: number
   }
 
   export type inscricoesUpdateManyMutationInput = {
-    encontro_id?: StringFieldUpdateOperationsInput | string
-    mentorado_id?: StringFieldUpdateOperationsInput | string
-    UNIQUE?: StringFieldUpdateOperationsInput | string
+
   }
 
   export type inscricoesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    encontro_id?: StringFieldUpdateOperationsInput | string
-    mentorado_id?: StringFieldUpdateOperationsInput | string
-    UNIQUE?: StringFieldUpdateOperationsInput | string
+    encontro_id?: IntFieldUpdateOperationsInput | number
+    mentorado_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -10279,6 +10596,16 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type InscricoesListRelationFilter = {
+    every?: inscricoesWhereInput
+    some?: inscricoesWhereInput
+    none?: inscricoesWhereInput
+  }
+
+  export type inscricoesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type encontrosCountOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
@@ -10352,33 +10679,49 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type EncontrosScalarRelationFilter = {
+    is?: encontrosWhereInput
+    isNot?: encontrosWhereInput
+  }
+
+  export type MentoradosScalarRelationFilter = {
+    is?: mentoradosWhereInput
+    isNot?: mentoradosWhereInput
+  }
+
+  export type inscricoesEncontro_idMentorado_idCompoundUniqueInput = {
+    encontro_id: number
+    mentorado_id: number
+  }
+
   export type inscricoesCountOrderByAggregateInput = {
     id?: SortOrder
     encontro_id?: SortOrder
     mentorado_id?: SortOrder
-    UNIQUE?: SortOrder
   }
 
   export type inscricoesAvgOrderByAggregateInput = {
     id?: SortOrder
+    encontro_id?: SortOrder
+    mentorado_id?: SortOrder
   }
 
   export type inscricoesMaxOrderByAggregateInput = {
     id?: SortOrder
     encontro_id?: SortOrder
     mentorado_id?: SortOrder
-    UNIQUE?: SortOrder
   }
 
   export type inscricoesMinOrderByAggregateInput = {
     id?: SortOrder
     encontro_id?: SortOrder
     mentorado_id?: SortOrder
-    UNIQUE?: SortOrder
   }
 
   export type inscricoesSumOrderByAggregateInput = {
     id?: SortOrder
+    encontro_id?: SortOrder
+    mentorado_id?: SortOrder
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {
@@ -10513,12 +10856,124 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAccountsInput, UserUpdateWithoutAccountsInput>, UserUncheckedUpdateWithoutAccountsInput>
   }
 
+  export type inscricoesCreateNestedManyWithoutEncontroInput = {
+    create?: XOR<inscricoesCreateWithoutEncontroInput, inscricoesUncheckedCreateWithoutEncontroInput> | inscricoesCreateWithoutEncontroInput[] | inscricoesUncheckedCreateWithoutEncontroInput[]
+    connectOrCreate?: inscricoesCreateOrConnectWithoutEncontroInput | inscricoesCreateOrConnectWithoutEncontroInput[]
+    createMany?: inscricoesCreateManyEncontroInputEnvelope
+    connect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+  }
+
+  export type inscricoesUncheckedCreateNestedManyWithoutEncontroInput = {
+    create?: XOR<inscricoesCreateWithoutEncontroInput, inscricoesUncheckedCreateWithoutEncontroInput> | inscricoesCreateWithoutEncontroInput[] | inscricoesUncheckedCreateWithoutEncontroInput[]
+    connectOrCreate?: inscricoesCreateOrConnectWithoutEncontroInput | inscricoesCreateOrConnectWithoutEncontroInput[]
+    createMany?: inscricoesCreateManyEncontroInputEnvelope
+    connect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type inscricoesUpdateManyWithoutEncontroNestedInput = {
+    create?: XOR<inscricoesCreateWithoutEncontroInput, inscricoesUncheckedCreateWithoutEncontroInput> | inscricoesCreateWithoutEncontroInput[] | inscricoesUncheckedCreateWithoutEncontroInput[]
+    connectOrCreate?: inscricoesCreateOrConnectWithoutEncontroInput | inscricoesCreateOrConnectWithoutEncontroInput[]
+    upsert?: inscricoesUpsertWithWhereUniqueWithoutEncontroInput | inscricoesUpsertWithWhereUniqueWithoutEncontroInput[]
+    createMany?: inscricoesCreateManyEncontroInputEnvelope
+    set?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    disconnect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    delete?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    connect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    update?: inscricoesUpdateWithWhereUniqueWithoutEncontroInput | inscricoesUpdateWithWhereUniqueWithoutEncontroInput[]
+    updateMany?: inscricoesUpdateManyWithWhereWithoutEncontroInput | inscricoesUpdateManyWithWhereWithoutEncontroInput[]
+    deleteMany?: inscricoesScalarWhereInput | inscricoesScalarWhereInput[]
+  }
+
+  export type inscricoesUncheckedUpdateManyWithoutEncontroNestedInput = {
+    create?: XOR<inscricoesCreateWithoutEncontroInput, inscricoesUncheckedCreateWithoutEncontroInput> | inscricoesCreateWithoutEncontroInput[] | inscricoesUncheckedCreateWithoutEncontroInput[]
+    connectOrCreate?: inscricoesCreateOrConnectWithoutEncontroInput | inscricoesCreateOrConnectWithoutEncontroInput[]
+    upsert?: inscricoesUpsertWithWhereUniqueWithoutEncontroInput | inscricoesUpsertWithWhereUniqueWithoutEncontroInput[]
+    createMany?: inscricoesCreateManyEncontroInputEnvelope
+    set?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    disconnect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    delete?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    connect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    update?: inscricoesUpdateWithWhereUniqueWithoutEncontroInput | inscricoesUpdateWithWhereUniqueWithoutEncontroInput[]
+    updateMany?: inscricoesUpdateManyWithWhereWithoutEncontroInput | inscricoesUpdateManyWithWhereWithoutEncontroInput[]
+    deleteMany?: inscricoesScalarWhereInput | inscricoesScalarWhereInput[]
+  }
+
+  export type inscricoesCreateNestedManyWithoutMentoradoInput = {
+    create?: XOR<inscricoesCreateWithoutMentoradoInput, inscricoesUncheckedCreateWithoutMentoradoInput> | inscricoesCreateWithoutMentoradoInput[] | inscricoesUncheckedCreateWithoutMentoradoInput[]
+    connectOrCreate?: inscricoesCreateOrConnectWithoutMentoradoInput | inscricoesCreateOrConnectWithoutMentoradoInput[]
+    createMany?: inscricoesCreateManyMentoradoInputEnvelope
+    connect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+  }
+
+  export type inscricoesUncheckedCreateNestedManyWithoutMentoradoInput = {
+    create?: XOR<inscricoesCreateWithoutMentoradoInput, inscricoesUncheckedCreateWithoutMentoradoInput> | inscricoesCreateWithoutMentoradoInput[] | inscricoesUncheckedCreateWithoutMentoradoInput[]
+    connectOrCreate?: inscricoesCreateOrConnectWithoutMentoradoInput | inscricoesCreateOrConnectWithoutMentoradoInput[]
+    createMany?: inscricoesCreateManyMentoradoInputEnvelope
+    connect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+  }
+
+  export type inscricoesUpdateManyWithoutMentoradoNestedInput = {
+    create?: XOR<inscricoesCreateWithoutMentoradoInput, inscricoesUncheckedCreateWithoutMentoradoInput> | inscricoesCreateWithoutMentoradoInput[] | inscricoesUncheckedCreateWithoutMentoradoInput[]
+    connectOrCreate?: inscricoesCreateOrConnectWithoutMentoradoInput | inscricoesCreateOrConnectWithoutMentoradoInput[]
+    upsert?: inscricoesUpsertWithWhereUniqueWithoutMentoradoInput | inscricoesUpsertWithWhereUniqueWithoutMentoradoInput[]
+    createMany?: inscricoesCreateManyMentoradoInputEnvelope
+    set?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    disconnect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    delete?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    connect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    update?: inscricoesUpdateWithWhereUniqueWithoutMentoradoInput | inscricoesUpdateWithWhereUniqueWithoutMentoradoInput[]
+    updateMany?: inscricoesUpdateManyWithWhereWithoutMentoradoInput | inscricoesUpdateManyWithWhereWithoutMentoradoInput[]
+    deleteMany?: inscricoesScalarWhereInput | inscricoesScalarWhereInput[]
+  }
+
+  export type inscricoesUncheckedUpdateManyWithoutMentoradoNestedInput = {
+    create?: XOR<inscricoesCreateWithoutMentoradoInput, inscricoesUncheckedCreateWithoutMentoradoInput> | inscricoesCreateWithoutMentoradoInput[] | inscricoesUncheckedCreateWithoutMentoradoInput[]
+    connectOrCreate?: inscricoesCreateOrConnectWithoutMentoradoInput | inscricoesCreateOrConnectWithoutMentoradoInput[]
+    upsert?: inscricoesUpsertWithWhereUniqueWithoutMentoradoInput | inscricoesUpsertWithWhereUniqueWithoutMentoradoInput[]
+    createMany?: inscricoesCreateManyMentoradoInputEnvelope
+    set?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    disconnect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    delete?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    connect?: inscricoesWhereUniqueInput | inscricoesWhereUniqueInput[]
+    update?: inscricoesUpdateWithWhereUniqueWithoutMentoradoInput | inscricoesUpdateWithWhereUniqueWithoutMentoradoInput[]
+    updateMany?: inscricoesUpdateManyWithWhereWithoutMentoradoInput | inscricoesUpdateManyWithWhereWithoutMentoradoInput[]
+    deleteMany?: inscricoesScalarWhereInput | inscricoesScalarWhereInput[]
+  }
+
+  export type encontrosCreateNestedOneWithoutInscricoesInput = {
+    create?: XOR<encontrosCreateWithoutInscricoesInput, encontrosUncheckedCreateWithoutInscricoesInput>
+    connectOrCreate?: encontrosCreateOrConnectWithoutInscricoesInput
+    connect?: encontrosWhereUniqueInput
+  }
+
+  export type mentoradosCreateNestedOneWithoutInscricoesInput = {
+    create?: XOR<mentoradosCreateWithoutInscricoesInput, mentoradosUncheckedCreateWithoutInscricoesInput>
+    connectOrCreate?: mentoradosCreateOrConnectWithoutInscricoesInput
+    connect?: mentoradosWhereUniqueInput
+  }
+
+  export type encontrosUpdateOneRequiredWithoutInscricoesNestedInput = {
+    create?: XOR<encontrosCreateWithoutInscricoesInput, encontrosUncheckedCreateWithoutInscricoesInput>
+    connectOrCreate?: encontrosCreateOrConnectWithoutInscricoesInput
+    upsert?: encontrosUpsertWithoutInscricoesInput
+    connect?: encontrosWhereUniqueInput
+    update?: XOR<XOR<encontrosUpdateToOneWithWhereWithoutInscricoesInput, encontrosUpdateWithoutInscricoesInput>, encontrosUncheckedUpdateWithoutInscricoesInput>
+  }
+
+  export type mentoradosUpdateOneRequiredWithoutInscricoesNestedInput = {
+    create?: XOR<mentoradosCreateWithoutInscricoesInput, mentoradosUncheckedCreateWithoutInscricoesInput>
+    connectOrCreate?: mentoradosCreateOrConnectWithoutInscricoesInput
+    upsert?: mentoradosUpsertWithoutInscricoesInput
+    connect?: mentoradosWhereUniqueInput
+    update?: XOR<XOR<mentoradosUpdateToOneWithWhereWithoutInscricoesInput, mentoradosUpdateWithoutInscricoesInput>, mentoradosUncheckedUpdateWithoutInscricoesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10950,6 +11405,165 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type inscricoesCreateWithoutEncontroInput = {
+    mentorado: mentoradosCreateNestedOneWithoutInscricoesInput
+  }
+
+  export type inscricoesUncheckedCreateWithoutEncontroInput = {
+    id?: number
+    mentorado_id: number
+  }
+
+  export type inscricoesCreateOrConnectWithoutEncontroInput = {
+    where: inscricoesWhereUniqueInput
+    create: XOR<inscricoesCreateWithoutEncontroInput, inscricoesUncheckedCreateWithoutEncontroInput>
+  }
+
+  export type inscricoesCreateManyEncontroInputEnvelope = {
+    data: inscricoesCreateManyEncontroInput | inscricoesCreateManyEncontroInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type inscricoesUpsertWithWhereUniqueWithoutEncontroInput = {
+    where: inscricoesWhereUniqueInput
+    update: XOR<inscricoesUpdateWithoutEncontroInput, inscricoesUncheckedUpdateWithoutEncontroInput>
+    create: XOR<inscricoesCreateWithoutEncontroInput, inscricoesUncheckedCreateWithoutEncontroInput>
+  }
+
+  export type inscricoesUpdateWithWhereUniqueWithoutEncontroInput = {
+    where: inscricoesWhereUniqueInput
+    data: XOR<inscricoesUpdateWithoutEncontroInput, inscricoesUncheckedUpdateWithoutEncontroInput>
+  }
+
+  export type inscricoesUpdateManyWithWhereWithoutEncontroInput = {
+    where: inscricoesScalarWhereInput
+    data: XOR<inscricoesUpdateManyMutationInput, inscricoesUncheckedUpdateManyWithoutEncontroInput>
+  }
+
+  export type inscricoesScalarWhereInput = {
+    AND?: inscricoesScalarWhereInput | inscricoesScalarWhereInput[]
+    OR?: inscricoesScalarWhereInput[]
+    NOT?: inscricoesScalarWhereInput | inscricoesScalarWhereInput[]
+    id?: IntFilter<"inscricoes"> | number
+    encontro_id?: IntFilter<"inscricoes"> | number
+    mentorado_id?: IntFilter<"inscricoes"> | number
+  }
+
+  export type inscricoesCreateWithoutMentoradoInput = {
+    encontro: encontrosCreateNestedOneWithoutInscricoesInput
+  }
+
+  export type inscricoesUncheckedCreateWithoutMentoradoInput = {
+    id?: number
+    encontro_id: number
+  }
+
+  export type inscricoesCreateOrConnectWithoutMentoradoInput = {
+    where: inscricoesWhereUniqueInput
+    create: XOR<inscricoesCreateWithoutMentoradoInput, inscricoesUncheckedCreateWithoutMentoradoInput>
+  }
+
+  export type inscricoesCreateManyMentoradoInputEnvelope = {
+    data: inscricoesCreateManyMentoradoInput | inscricoesCreateManyMentoradoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type inscricoesUpsertWithWhereUniqueWithoutMentoradoInput = {
+    where: inscricoesWhereUniqueInput
+    update: XOR<inscricoesUpdateWithoutMentoradoInput, inscricoesUncheckedUpdateWithoutMentoradoInput>
+    create: XOR<inscricoesCreateWithoutMentoradoInput, inscricoesUncheckedCreateWithoutMentoradoInput>
+  }
+
+  export type inscricoesUpdateWithWhereUniqueWithoutMentoradoInput = {
+    where: inscricoesWhereUniqueInput
+    data: XOR<inscricoesUpdateWithoutMentoradoInput, inscricoesUncheckedUpdateWithoutMentoradoInput>
+  }
+
+  export type inscricoesUpdateManyWithWhereWithoutMentoradoInput = {
+    where: inscricoesScalarWhereInput
+    data: XOR<inscricoesUpdateManyMutationInput, inscricoesUncheckedUpdateManyWithoutMentoradoInput>
+  }
+
+  export type encontrosCreateWithoutInscricoesInput = {
+    nome: string
+    data?: Date | string | null
+    vagas_max: number
+  }
+
+  export type encontrosUncheckedCreateWithoutInscricoesInput = {
+    id?: number
+    nome: string
+    data?: Date | string | null
+    vagas_max: number
+  }
+
+  export type encontrosCreateOrConnectWithoutInscricoesInput = {
+    where: encontrosWhereUniqueInput
+    create: XOR<encontrosCreateWithoutInscricoesInput, encontrosUncheckedCreateWithoutInscricoesInput>
+  }
+
+  export type mentoradosCreateWithoutInscricoesInput = {
+    nome: string
+    email: string
+  }
+
+  export type mentoradosUncheckedCreateWithoutInscricoesInput = {
+    id?: number
+    nome: string
+    email: string
+  }
+
+  export type mentoradosCreateOrConnectWithoutInscricoesInput = {
+    where: mentoradosWhereUniqueInput
+    create: XOR<mentoradosCreateWithoutInscricoesInput, mentoradosUncheckedCreateWithoutInscricoesInput>
+  }
+
+  export type encontrosUpsertWithoutInscricoesInput = {
+    update: XOR<encontrosUpdateWithoutInscricoesInput, encontrosUncheckedUpdateWithoutInscricoesInput>
+    create: XOR<encontrosCreateWithoutInscricoesInput, encontrosUncheckedCreateWithoutInscricoesInput>
+    where?: encontrosWhereInput
+  }
+
+  export type encontrosUpdateToOneWithWhereWithoutInscricoesInput = {
+    where?: encontrosWhereInput
+    data: XOR<encontrosUpdateWithoutInscricoesInput, encontrosUncheckedUpdateWithoutInscricoesInput>
+  }
+
+  export type encontrosUpdateWithoutInscricoesInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vagas_max?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type encontrosUncheckedUpdateWithoutInscricoesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    data?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    vagas_max?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type mentoradosUpsertWithoutInscricoesInput = {
+    update: XOR<mentoradosUpdateWithoutInscricoesInput, mentoradosUncheckedUpdateWithoutInscricoesInput>
+    create: XOR<mentoradosCreateWithoutInscricoesInput, mentoradosUncheckedCreateWithoutInscricoesInput>
+    where?: mentoradosWhereInput
+  }
+
+  export type mentoradosUpdateToOneWithWhereWithoutInscricoesInput = {
+    where?: mentoradosWhereInput
+    data: XOR<mentoradosUpdateWithoutInscricoesInput, mentoradosUncheckedUpdateWithoutInscricoesInput>
+  }
+
+  export type mentoradosUpdateWithoutInscricoesInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type mentoradosUncheckedUpdateWithoutInscricoesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+  }
+
   export type SessionCreateManyUserInput = {
     id: string
     expiresAt: Date | string
@@ -11048,6 +11662,44 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type inscricoesCreateManyEncontroInput = {
+    id?: number
+    mentorado_id: number
+  }
+
+  export type inscricoesUpdateWithoutEncontroInput = {
+    mentorado?: mentoradosUpdateOneRequiredWithoutInscricoesNestedInput
+  }
+
+  export type inscricoesUncheckedUpdateWithoutEncontroInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    mentorado_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type inscricoesUncheckedUpdateManyWithoutEncontroInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    mentorado_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type inscricoesCreateManyMentoradoInput = {
+    id?: number
+    encontro_id: number
+  }
+
+  export type inscricoesUpdateWithoutMentoradoInput = {
+    encontro?: encontrosUpdateOneRequiredWithoutInscricoesNestedInput
+  }
+
+  export type inscricoesUncheckedUpdateWithoutMentoradoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    encontro_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type inscricoesUncheckedUpdateManyWithoutMentoradoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    encontro_id?: IntFieldUpdateOperationsInput | number
   }
 
 
