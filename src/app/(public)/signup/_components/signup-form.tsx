@@ -6,11 +6,12 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { authClient } from '@/lib/auth-client'
+import { authClient } from "@/lib/auth-client"
 
 const signupSchema = z
   .object({
@@ -29,7 +30,6 @@ type SignupFormValues = z.infer<typeof signupSchema>
 export function SignupForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const form = useForm<SignupFormValues>({
@@ -43,27 +43,26 @@ export function SignupForm() {
   })
 
   async function onSubmit(formData: SignupFormValues) {
-
-    const { data, error } = await authClient.signUp.email({
+    await authClient.signUp.email({
       name: formData.name,
       email: formData.email,
       password: formData.password,
-      callbackURL: "/dashboard"
+      callbackURL: "/dashboard",
     }, {
-      onRequest: (ctx) => {
-
-      },
-      onSuccess: (ctx) => {
-        console.log("CADASTRADO: ", ctx)
+      onSuccess: () => {
         router.replace("/dashboard")
       },
       onError: (ctx) => {
-        console.log("ERRO AO CRIAR CONTA")
-        console.log(ctx)
-      }
+        if (ctx.error.code === "USER_ALREADY_EXISTS") {
+          form.setError("email", { message: "Este email já está cadastrado" })
+        } else {
+          toast.error("Não foi possível criar sua conta. Tente novamente.")
+        }
+      },
     })
-
   }
+
+  const isSubmitting = form.formState.isSubmitting
 
   return (
     <Form {...form}>
@@ -75,7 +74,7 @@ export function SignupForm() {
             <FormItem>
               <FormLabel>Nome</FormLabel>
               <FormControl>
-                <Input placeholder="Seu nome completo" {...field} disabled={isLoading} />
+                <Input placeholder="Seu nome completo" {...field} disabled={isSubmitting} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -89,7 +88,7 @@ export function SignupForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="seu@email.com" type="email" {...field} disabled={isLoading} />
+                <Input placeholder="seu@email.com" type="email" {...field} disabled={isSubmitting} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,7 +107,7 @@ export function SignupForm() {
                     placeholder="••••••••"
                     type={showPassword ? "text" : "password"}
                     {...field}
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                   />
                   <Button
                     type="button"
@@ -116,14 +115,14 @@ export function SignupForm() {
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={() => setShowPassword(!showPassword)}
-                    disabled={isLoading}
+                    disabled={isSubmitting}
+                    aria-label={showPassword ? "Esconder senha" : "Mostrar senha"}
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4 text-muted-foreground" />
                     ) : (
                       <Eye className="h-4 w-4 text-muted-foreground" />
                     )}
-                    <span className="sr-only">{showPassword ? "Esconder senha" : "Mostrar senha"}</span>
                   </Button>
                 </div>
               </FormControl>
@@ -144,7 +143,7 @@ export function SignupForm() {
                     placeholder="••••••••"
                     type={showConfirmPassword ? "text" : "password"}
                     {...field}
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                   />
                   <Button
                     type="button"
@@ -152,14 +151,14 @@ export function SignupForm() {
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    disabled={isLoading}
+                    disabled={isSubmitting}
+                    aria-label={showConfirmPassword ? "Esconder confirmação de senha" : "Mostrar confirmação de senha"}
                   >
                     {showConfirmPassword ? (
                       <EyeOff className="h-4 w-4 text-muted-foreground" />
                     ) : (
                       <Eye className="h-4 w-4 text-muted-foreground" />
                     )}
-                    <span className="sr-only">{showConfirmPassword ? "Esconder senha" : "Mostrar senha"}</span>
                   </Button>
                 </div>
               </FormControl>
@@ -168,8 +167,8 @@ export function SignupForm() {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {form.formState.isSubmitting ? (
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Cadastrando...

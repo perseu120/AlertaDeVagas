@@ -6,13 +6,13 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Eye, EyeOff, Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { GoogleLogo } from "@phosphor-icons/react";
+import { GoogleLogo } from "@phosphor-icons/react"
 import { authClient } from "@/lib/auth-client"
-
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -23,7 +23,6 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const form = useForm<LoginFormValues>({
@@ -38,28 +37,29 @@ export function LoginForm() {
     await authClient.signIn.email({
       email: formData.email,
       password: formData.password,
-      callbackURL: "/dashboard"
+      callbackURL: "/dashboard",
     }, {
-      onRequest: (ctx) => { },
-      onSuccess: (ctx) => {
-        console.log("LOGADO: ", ctx)
+      onSuccess: () => {
         router.replace("/dashboard")
       },
       onError: (ctx) => {
-        console.log("ERRO AO LOGAR: ", ctx)
         if (ctx.error.code === "INVALID_EMAIL_OR_PASSWORD") {
-          alert("Email ou senha incorretos")
+          toast.error("Email ou senha inválidos")
+        } else {
+          toast.error("Não foi possível fazer login. Tente novamente.")
         }
-      }
+      },
     })
   }
 
   async function handleSignInWithGoogle() {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "/dashboard"
+      callbackURL: "/dashboard",
     })
   }
+
+  const isSubmitting = form.formState.isSubmitting
 
   return (
     <Form {...form}>
@@ -71,7 +71,7 @@ export function LoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="seu@email.com" type="email" {...field} disabled={isLoading} />
+                <Input placeholder="seu@email.com" type="email" {...field} disabled={isSubmitting} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,7 +90,7 @@ export function LoginForm() {
                     placeholder="••••••••"
                     type={showPassword ? "text" : "password"}
                     {...field}
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                   />
                   <Button
                     type="button"
@@ -98,14 +98,14 @@ export function LoginForm() {
                     size="sm"
                     className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                     onClick={() => setShowPassword(!showPassword)}
-                    disabled={isLoading}
+                    disabled={isSubmitting}
+                    aria-label={showPassword ? "Esconder senha" : "Mostrar senha"}
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4 text-muted-foreground" />
                     ) : (
                       <Eye className="h-4 w-4 text-muted-foreground" />
                     )}
-                    <span className="sr-only">{showPassword ? "Esconder senha" : "Mostrar senha"}</span>
                   </Button>
                 </div>
               </FormControl>
@@ -114,8 +114,8 @@ export function LoginForm() {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? (
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Entrando...
@@ -137,8 +137,9 @@ export function LoginForm() {
         <Button
           type="button"
           variant="outline"
-          className=" w-full flex items-center justify-center gap-3 bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 transition-all duration-200 rounded-xl shadow-sm hover:shadow-md font-medium"
+          className="w-full flex items-center justify-center gap-3 bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 transition-all duration-200 rounded-xl shadow-sm hover:shadow-md font-medium"
           onClick={handleSignInWithGoogle}
+          disabled={isSubmitting}
         >
           <GoogleLogo className="mr-2 h-4 w-4" />
           Entrar com Google

@@ -128,3 +128,120 @@ Variáveis conforme Seção 14 da spec: `DATABASE_URL`, `NEXT_PUBLIC_URL`, `BETT
 ---
 
 *Próxima entrada: Fase 1 — Polimento da auth.*
+
+---
+
+## 2026-04-15 — Fase 1: Polimento da auth (concluída)
+
+### O que foi feito
+
+#### 1. `login-form.tsx` corrigido
+
+- Removido `alert()` da linha de erro de login — substituído por `toast.error()`
+- Removidos todos os `console.log`
+- Adicionado tratamento para erros genéricos além do `INVALID_EMAIL_OR_PASSWORD`
+- `isSubmitting` agora vem de `form.formState.isSubmitting` diretamente (removido `useState` redundante)
+- Botão Google desabilitado durante submit
+- `aria-label` adicionado no botão de mostrar/ocultar senha (melhoria de acessibilidade)
+
+**Por que `form.formState.isSubmitting` em vez de `useState`:** O `react-hook-form` já gerencia esse estado internamente durante o `handleSubmit`. Usar um `useState` separado criava desincronismo — o botão podia ficar habilitado em casos de erro antes de `setIsLoading(false)`.
+
+---
+
+#### 2. `signup-form.tsx` corrigido
+
+- Removidos todos os `console.log`
+- Erro de email já cadastrado (`USER_ALREADY_EXISTS`) exibido diretamente no campo de email via `form.setError()`, não como toast — mais preciso para o usuário
+- Erros genéricos exibidos como `toast.error()`
+- Estado de loading usa `form.formState.isSubmitting` (removido `useState` redundante)
+- `aria-label` adicionado nos botões de mostrar/ocultar senha
+
+**Por que `setError` no campo para email duplicado:** O erro está diretamente vinculado a um campo específico. Exibir um toast genérico perderia esse contexto. Usando `form.setError("email", ...)`, a mensagem aparece abaixo do campo de email, exatamente onde o usuário está olhando.
+
+---
+
+#### 3. Route groups `(public)` e `(authenticated)` criados
+
+**Estrutura final:**
+```
+src/app/
+├── (public)/
+│   ├── layout.tsx          # redireciona /dashboard se autenticado
+│   ├── page.tsx            # login
+│   ├── _components/
+│   │   └── login-form.tsx
+│   └── signup/
+│       ├── page.tsx
+│       └── _components/
+│           └── signup-form.tsx
+├── (authenticated)/
+│   ├── layout.tsx          # redireciona / se não autenticado
+│   └── dashboard/
+│       ├── page.tsx
+│       └── _components/
+│           └── button-signout.tsx
+├── api/auth/[...all]/route.ts
+├── error.tsx
+├── not-found.tsx
+├── loading.tsx
+└── layout.tsx
+```
+
+**Por que route groups:** Permitem layouts distintos por contexto (público vs autenticado) sem alterar a URL. O layout de cada grupo centraliza a verificação de sessão — uma única chamada para `auth.api.getSession()` cobre todas as rotas filhas.
+
+---
+
+#### 4. `(public)/layout.tsx` — redirect de usuário autenticado
+
+Verifica sessão no servidor. Se existir, redireciona para `/dashboard`. Cobre `/` e `/signup` sem precisar de lógica duplicada em cada página.
+
+**Por que Server Component:** A verificação de sessão acessa o banco/cookie no servidor — não faz sentido e seria inseguro fazer isso no cliente. O Next.js suporta `redirect()` direto em Server Components.
+
+---
+
+#### 5. `(authenticated)/layout.tsx` — sessão centralizada
+
+Verifica sessão uma única vez para todas as rotas autenticadas. Se não houver sessão, redireciona para `/`. O `dashboard/page.tsx` foi aliviado — não precisa mais fazer sua própria verificação.
+
+**Por que remover a verificação do `dashboard/page.tsx`:** Com o layout centralizando o guard, duplicar a verificação na página seria redundante e poderia gerar comportamentos inconsistentes se as regras mudassem.
+
+---
+
+### Arquivos criados
+
+| Arquivo | Ação |
+|---|---|
+| `src/app/(public)/layout.tsx` | Criado — guard de redirect |
+| `src/app/(public)/page.tsx` | Criado — login |
+| `src/app/(public)/_components/login-form.tsx` | Criado — form corrigido |
+| `src/app/(public)/signup/page.tsx` | Criado — signup |
+| `src/app/(public)/signup/_components/signup-form.tsx` | Criado — form corrigido |
+| `src/app/(authenticated)/layout.tsx` | Criado — guard de sessão |
+| `src/app/(authenticated)/dashboard/page.tsx` | Criado — sem verificação de sessão própria |
+| `src/app/(authenticated)/dashboard/_components/button-signout.tsx` | Criado |
+
+### Arquivos removidos
+
+`src/app/page.tsx`, `src/app/_components/login-form.tsx`, `src/app/signup/page.tsx`, `src/app/signup/_components/signup-form.tsx`, `src/app/dashboard/page.tsx`, `src/app/dashboard/_components/button-signout.tsx`
+
+---
+
+### Critérios de aceite do RF-01 atendidos
+
+- [x] Usuário autenticado que acessa `/` é redirecionado para `/dashboard`
+- [x] Usuário autenticado que acessa `/signup` é redirecionado para `/dashboard`
+- [x] Erros de login não usam mais `alert()`, usam toast
+- [x] Erros de cadastro são exibidos no formulário (email duplicado) ou toast (erro genérico)
+- [x] Mensagens de erro em português e amigáveis
+- [x] Estado de loading visível durante submit (botão desabilitado + spinner)
+
+### Critérios de aceite do RF-02 (parcial)
+
+- [x] Existe `src/app/(authenticated)/layout.tsx` que protege rotas filhas
+- [x] Verificação de sessão acontece uma única vez no layout
+- [ ] Navbar (será feita na Fase 2)
+- [ ] Toggle de tema (será feito na Fase 2)
+
+---
+
+*Próxima entrada: Fase 2 — Layout e navegação.*

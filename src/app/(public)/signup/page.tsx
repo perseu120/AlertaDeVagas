@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { SignupForm } from "./_components/signup-form"
 
+export const metadata = { title: "Cadastro" }
+
 export default function Signup() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
